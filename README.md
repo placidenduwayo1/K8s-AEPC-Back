@@ -24,7 +24,7 @@
 	- a spring cloud configuration server: ***k8s-ms-config-service***
 	- the config server pulls the needed configurations from a git center of all configuration files [here](https://github.com/placidenduwayo1/config-files-center.git)
 	
-- (1) microservices communicate each other; (2) management of alternative scenarios and resilience, (3) service discovery,load balancing and configuration
+- **(1)** microservices communicate each other; **(2)** management of alternative scenarios and resilience, **(3)** service discovery,load balancing and configuration
 	- (1) **spring cloud openfeign**
 	- (2) spring cloud circuit breaker: **Resilience4J**
 	- (3) **spring cloud kubernetes** dependecy is used in microservices to permit them to be discovered, load balanced and configured
