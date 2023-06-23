@@ -1,0 +1,8 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name:ks8-aepc-bs-ms-project
+  cloud:
+    config:
+      uri: http://k8s-aepc-ms-config-service:8280

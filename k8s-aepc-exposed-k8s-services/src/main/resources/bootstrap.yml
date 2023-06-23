@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: k8s-aepc-exposed-services
+  cloud:
+    config:
+      uri: http://k8s-aepc-ms-config-service:8280
+  main:
+    banner-mode: off

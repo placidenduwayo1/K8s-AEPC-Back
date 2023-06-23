@@ -1,0 +1,9 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: k8s-aepc-bs-ms-employee
+  cloud:
+    config:
+      uri: http://k8s-aepc-ms-config-service:8280
+  message: welcome to employee microservice :) :) :)

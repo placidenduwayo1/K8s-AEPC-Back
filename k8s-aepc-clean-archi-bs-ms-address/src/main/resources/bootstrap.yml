@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: k8s-aepc-bs-ms-address  # the name of kubernetes service
+  cloud:
+    config:
+      uri:
+       - http://k8s-aepc-ms-config-service:8280 # the name of service related to k8s-aepc-ms-config-pod
