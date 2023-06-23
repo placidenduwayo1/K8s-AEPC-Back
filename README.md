@@ -22,7 +22,7 @@
 
 - each microservice gets its configuration properties from: 
 	- a spring cloud configuration server: ***k8s-ms-config-service***
-	- the config server pulls the needed configurations from a git center of all configuration files [config files](https://github.com/placidenduwayo1/config-files-center.git)
+	- the config server pulls the needed configurations from a git center of all configuration files [here](https://github.com/placidenduwayo1/config-files-center.git)
 	
 - (1) microservices communicate each other; (2) management of alternative scenarios and resilience, (3) service discovery,load balancing and configuration
 	- (1) **spring cloud openfeign**
