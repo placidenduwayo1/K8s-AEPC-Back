@@ -19,16 +19,15 @@
 - utility microservices:
 	- ***k8s-ms-config-service***: a config server to expose configurations to services
 	- ***k8s-gateway-service***: a gateway between the back and front
+
+- each microservice gets its configuration properties from: 
+	- a spring cloud configuration server: ***k8s-ms-config-service***
+	- the config server pulls the needed configurations from a git center of all configuration files [config files](https://github.com/placidenduwayo1/config-files-center.git)
 	
-- application microservices communicate each other (1); management of alternative scenarios and resilience (2)
+- (1) microservices communicate each other; (2) management of alternative scenarios and resilience, (3) service discovery,load balancing and configuration
 	- (1) **spring cloud openfeign**
 	- (2) spring cloud circuit breaker: **Resilience4J**
-
-- ***kubernetes service siscovery*** dependecy is used in microservices to permit them to be discovered, load balanced and configured
-
-- each microservice get its configuration properties from: 
-	- a spring cloud configuration server: ***k8s-ms-config-service***
-	- the config server pulls the needed configurations from a center of all configuration files [here](https://github.com/placidenduwayo1/config-files-center.git)
+	- (3) **spring cloud kubernetes** dependecy is used in microservices to permit them to be discovered, load balanced and configured
 
 # application services containerization
 
@@ -50,7 +49,7 @@ here is the git of deploying all microservices container into kubernetes cluster
 	- >```minikube --nodes 3 --profile nodes start```: the commande line create 3 nodes with profile nodes 
 - Kubectl is a Kubernets CLI to make developer to communicate with the master node
 
-more information about Minikube and Kubectl, documentations here: [Minikube](https://kubernetes.io/fr/docs/setup/learning-environment/minikube/) and [Kubectl](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/)
+more information about Minikube and Kubectl, doc here: [Minikube](https://kubernetes.io/fr/docs/setup/learning-environment/minikube/) and [Kubectl](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/)
 
 # architecture
 the [figure](https://drive.google.com/file/d/1bedn0GuPzPgybFJBWTytlyV3dxl4WJiL/view?usp=drive_link) show the global and detailed architecture of project
