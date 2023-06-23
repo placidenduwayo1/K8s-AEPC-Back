@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: k8s-aepc-ms-registry-svc
+  cloud:
+    config:
+      uri: http://k8s-aepc-ms-config-svc:8280
+  main:
+    banner-mode: off

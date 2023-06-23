@@ -1,0 +1,9 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: k8s-exposed-services
+  cloud:
+    config:
+      uri:
+        - http://localhost:8280
