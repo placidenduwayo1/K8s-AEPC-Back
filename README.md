@@ -27,29 +27,30 @@
 - **(1)** microservices communicate each other; **(2)** management of alternative scenarios and resilience, **(3)** service discovery,load balancing and configuration
 	- (1) **spring cloud openfeign**
 	- (2) spring cloud circuit breaker: **Resilience4J**
-	- (3) **spring cloud kubernetes** dependecy is used in microservices to permit them to be discovered, load balanced and configured
+	- (3) **spring cloud kubernetes** dependecy to permit microservices to be discovered, load balanced and configured
 
-# application services containerization
+# microservices containerization
 
-- each microservice is containerized using **Docker Engine**, all application microservices are deployed using a template file: **docker compose**
-    
-here is the git of template that deploys all application microservices in docker images: [docker-compose](https://github.com/placidenduwayo1/K8s-AEPC-Docker-Deploy.git)
+- each microservice is containerized using **Docker Engine**, all microservices are deployed using a template file: **docker compose**.
+- here is the git of template that deploys all application microservices in docker images: [docker-compose](https://github.com/placidenduwayo1/K8s-AEPC-Docker-Deploy.git)
 
-# deploying docker containers in K8s cluster
-Now, all docker containers of microservices of the application are deployed into Kubernetes cluster. To get start with containers orchestration with Kubernetes, refer to doc [Kubernetes](https://kubernetes.io/fr/docs/home/)
+# containers orchestration in K8s cluster
+all docker containers of microservices of the application are deployed and orchestrated into k8s cluster. To get start with containers orchestration with k8s, refer to [doc](https://kubernetes.io/fr/docs/home/)
 
-each microservice container is deployed into ***k8s pod***, a ***k8s service*** is created to expose the pod outside, each microservice container is deployed into 3 replica pod. 
+each microservice container is deployed into  ***k8s pod***, a ***k8s service*** is created to expose the pods of deployment outside, each microservice container is deployed into **3 replica pods**. 
 
-here is the git of deploying all microservices container into kubernetes cluster: [kubernetes cluster](https://github.com/placidenduwayo1/K8s-AEPC-Containers-Deploy.git)
+here is the git of deploying all microservices container into kubernetes cluster: [k8s-aepc-deploy](https://github.com/placidenduwayo1/K8s-AEPC-Containers-Deploy.git)
 
 ## prerequisite:
-- In local, you need have Minikube and Kubectl running.
-- Minikube installation create a one node cluster to have master node and worker node in the same computer. You can create more than one node cluster by this command line: 
+- In local, you need Minikube and Kubectl running.
+- Minikube installation create a one node cluster to have Master and Worker Nodes on the same computer. One can create more than one node cluster as follows: 
 	- >```minikube --nodes nb-of-node --profile profile-flag start```
-	- >```minikube --nodes 3 --profile nodes start```: the commande line create 3 nodes with profile nodes 
-- Kubectl is a Kubernets CLI to make developer to communicate with the master node
+	- >```minikube --nodes 3 --profile nodes start```: 
+		- the commande line create a cluster with 3 nodes
+		- one of the three node is a Master Node et the 2 others are Worker Nodes
+- Kubectl is a Kubernets CLI to make developer to communicate with the Master Node
 
-more information about Minikube and Kubectl, doc here: [Minikube](https://kubernetes.io/fr/docs/setup/learning-environment/minikube/) and [Kubectl](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/)
+here is the documentations about those two tools: [Minikube](https://kubernetes.io/fr/docs/setup/learning-environment/minikube/) and [Kubectl](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/)
 
 # architecture
-the [figure](https://drive.google.com/file/d/1bedn0GuPzPgybFJBWTytlyV3dxl4WJiL/view?usp=drive_link) show the global and detailed architecture of project
+the gloabal and detailed architecture of project can be viewed:[here](https://drive.google.com/file/d/1bedn0GuPzPgybFJBWTytlyV3dxl4WJiL/view?usp=drive_link)
