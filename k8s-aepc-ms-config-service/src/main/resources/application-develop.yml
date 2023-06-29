@@ -1,6 +1,14 @@
 server:
   port: 8280
 spring:
+  application:
+    # the name of kubernetes service associated to k8s-aepc-ms-config-pod
+    name: k8s-aepc-ms-config-service
+  main:
+    banner-mode: off
+  config:
+    activate:
+      on-profile: develop
   cloud:
     config:
       server:
@@ -8,12 +16,6 @@ spring:
           uri: https://github.com/placidenduwayo1/config-files-center.git
           default-label: main
           search-paths: for-k8s-aepc-back-project
-  main:
-    banner-mode: off
-  message: welcome to spring config server
-  application:
-    name: k8s-aepc-ms-config-svc # the name of kubernetes service associated to k8s-aepc-ms-config-pod
-  config:
-    activate:
-      on-profile: develop
+#          default message
+  message: welcome to spring cloud config service
 

@@ -46,7 +46,7 @@ public class ProjectController {
 
     @PostMapping(value = "/projects")
     public Project createProject(@RequestBody ProjectDto projectDto) throws ProjectAlreadyExistsException,
-            ProjectFieldsEmptyException, ProjectCreationErrorDueToEmployeeAPIException, ProjectCreationErrorDueToCompanyAPIException, ProjectCreationErrorDueToNotAcceptedEmployeeStateException {
+            ProjectFieldsEmptyException, RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
         Project createdProject = projectInputService.createProject(projectDto);
         createdProject.setEmployee(employeeServiceProxy.getEmployeeByIdError(createdProject.getEmployeeID()));
         createdProject.setCompany(companyServiceProxy.getCompanyByIdError(createdProject.getCompanyID()));
@@ -55,8 +55,8 @@ public class ProjectController {
 
     @PutMapping(value = "/projects/{projectID}")
     public Project updateProject(@PathVariable(name = "projectID") String projectID, @RequestBody ProjectDto projectDto) throws
-            ProjectNotFoundException, ProjectCreationErrorDueToEmployeeAPIException, ProjectCreationErrorDueToCompanyAPIException,
-            ProjectFieldsEmptyException, ProjectCreationErrorDueToNotAcceptedEmployeeStateException, ProjectAlreadyExistsException {
+            ProjectNotFoundException, RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException,
+            ProjectFieldsEmptyException, RemoteEmployeeStateNotAcceptableException, ProjectAlreadyExistsException {
         Project updatedProject = projectInputService.updateProject(projectID, projectDto);
         updatedProject.setEmployee(employeeServiceProxy.getEmployeeByIdError(updatedProject.getEmployeeID()));
         updatedProject.setCompany(companyServiceProxy.getCompanyByIdError(updatedProject.getCompanyID()));
@@ -65,7 +65,7 @@ public class ProjectController {
 
     @DeleteMapping(value = "/projects/{projectID}")
     public void deleteProject(@PathVariable(name = "projectID") String projectID) throws ProjectNotFoundException,
-            EmployeeIsAssiacetedToProjectException, CompanyIsAssiacetedToProjectException {
+            ProjectIsAssignedToEmployeeException, ProjectIsAssignedToCompanyException {
         projectInputService.deleteProject(projectID);
     }
 

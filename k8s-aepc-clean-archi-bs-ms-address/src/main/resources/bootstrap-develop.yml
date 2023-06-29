@@ -6,5 +6,5 @@ spring:
   cloud:
     config:
       uri:
-        - http://k8s-aepc-ms-config:8280
+        - http://k8s-aepc-ms-config-service:8280
   message: welcome to address microservice :) :) :)

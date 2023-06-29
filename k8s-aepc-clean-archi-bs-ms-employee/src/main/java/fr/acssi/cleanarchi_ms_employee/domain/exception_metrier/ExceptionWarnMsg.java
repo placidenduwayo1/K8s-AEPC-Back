@@ -5,7 +5,7 @@ public enum ExceptionWarnMsg {
     EMPLOYEE_NOT_FOUND_EXCEPTION ("Employee not found exception"),
     EMPLOYEE_FIELDS_EMPTY_EXCEPTION ("Employee one ore more fields invalid exception"),
     EMPLOYEE_ASSOCIATED_PROJECTS_EXCEPTION("Employee project associated exception"),
-    ADDRESS_API_ERROR("Address API Error");
+    REMOTE_ADDRESS_API_UNAVAILABLE_EXCEPTION("Remote address api unavailable exception");
 
     private final String exception;
 

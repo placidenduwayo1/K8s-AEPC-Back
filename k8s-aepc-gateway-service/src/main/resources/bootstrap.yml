@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: k8s-aepc-gateway-service
+  main:
+    banner-mode: off
+  message: welcome to spring cloud gateway service :) :) :)
+  cloud:
+    config:
+      uri: http://k8s-aepc-ms-config-service:8280

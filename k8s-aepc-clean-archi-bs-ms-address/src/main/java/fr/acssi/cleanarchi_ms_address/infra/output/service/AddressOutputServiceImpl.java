@@ -9,22 +9,17 @@ import fr.acssi.cleanarchi_ms_address.domain.entity.Address;
 import fr.acssi.cleanarchi_ms_address.domain.exceptions.AddressNotFoundException;
 import fr.acssi.cleanarchi_ms_address.infra.output.mapper.AddressMapper;
 import fr.acssi.cleanarchi_ms_address.infra.output.repository.AddressRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AddressOutputServiceImpl implements AddressOutputService {
-
     private final AddressRepository addressRepository;
-    private final EmployeeServiceProxy employeeServiceProxy;
-
-    public AddressOutputServiceImpl(AddressRepository addressRepository, EmployeeServiceProxy employeeServiceProxy) {
-        this.addressRepository = addressRepository;
-        this.employeeServiceProxy = employeeServiceProxy;
-    }
-
+    private final   EmployeeServiceProxy employeeServiceProxy;
     @Override
     public List<Address> getAllAddresses() {
         List<AddressModel> addressModels = addressRepository.findByOrderByAddressIDAsc();

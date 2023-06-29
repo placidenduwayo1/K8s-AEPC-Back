@@ -53,8 +53,8 @@ public class ProjectInputServiceImpl implements ProjectInputService {
 
     @Override
     public Project createProject(ProjectDto projectDto) throws ProjectAlreadyExistsException,
-            ProjectFieldsEmptyException, ProjectCreationErrorDueToEmployeeAPIException,
-            ProjectCreationErrorDueToCompanyAPIException, ProjectCreationErrorDueToNotAcceptedEmployeeStateException {
+            ProjectFieldsEmptyException, RemoteEmployeeApiUnavailableException,
+            RemoteCompanyApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
         ProjectValidation.projectFormatter(projectDto);
 
         if (ProjectValidation.areInvalidProjectFields(projectDto)) {
@@ -70,15 +70,15 @@ public class ProjectInputServiceImpl implements ProjectInputService {
         Optional<EmployeeModel> employeeModel = getEmployeeByID(projectDto.getEmployeeID());
         Optional<CompanyModel> companyModel = getCompanyByID(projectDto.getCompanyID());
 
-        if (ProjectValidation.isInvalidEmployeeAPI(employeeModel.get())) {
-            throw new ProjectCreationErrorDueToEmployeeAPIException(employeeModel.toString());
+        if (ProjectValidation.isInvalidRemoteEmployeeAPI(employeeModel.get())) {
+            throw new RemoteEmployeeApiUnavailableException(employeeModel.toString());
         }
-        if (ProjectValidation.isInvalidCompanyAPI(companyModel.get())) {
-            throw new ProjectCreationErrorDueToCompanyAPIException(companyModel.toString());
+        if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel.get())) {
+            throw new RemoteCompanyApiUnavailableException(companyModel.toString());
         }
 
-        if (ProjectValidation.isInvalidEmployeeState(employeeModel.get())) {
-            throw new ProjectCreationErrorDueToNotAcceptedEmployeeStateException();
+        if (ProjectValidation.isInvalidRemoteEmployeeState(employeeModel.get())) {
+            throw new RemoteEmployeeStateNotAcceptableException();
         }
 
         project.setProjectID(UUID.randomUUID().toString());
@@ -89,23 +89,23 @@ public class ProjectInputServiceImpl implements ProjectInputService {
     }
 
     @Override
-    public void deleteProject(String projectID) throws ProjectNotFoundException, CompanyIsAssiacetedToProjectException,
-            EmployeeIsAssiacetedToProjectException {
+    public void deleteProject(String projectID) throws ProjectNotFoundException, ProjectIsAssignedToCompanyException,
+            ProjectIsAssignedToEmployeeException {
         Optional<Project> project = getProjectByID(projectID);
 
         if (project.isEmpty()) {
             throw new ProjectNotFoundException();
         } else if (!getProjectsAssignedToCompany(project.get().getCompanyID()).isEmpty()) {
-            throw new CompanyIsAssiacetedToProjectException();
+            throw new ProjectIsAssignedToCompanyException();
         } else if (!getProjectsAssignedToEmployee(project.get().getEmployeeID()).isEmpty()) {
-            throw new EmployeeIsAssiacetedToProjectException();
+            throw new ProjectIsAssignedToEmployeeException();
         }
     }
 
     @Override
     public Project updateProject(String projectID, ProjectDto projectDto) throws ProjectNotFoundException,
-            ProjectCreationErrorDueToEmployeeAPIException, ProjectCreationErrorDueToCompanyAPIException, ProjectFieldsEmptyException,
-            ProjectCreationErrorDueToNotAcceptedEmployeeStateException, ProjectAlreadyExistsException {
+            RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException, ProjectFieldsEmptyException,
+            RemoteEmployeeStateNotAcceptableException, ProjectAlreadyExistsException {
         ProjectValidation.projectFormatter(projectDto);
         if (ProjectValidation.areInvalidProjectFields(projectDto)) {
             throw new ProjectFieldsEmptyException();
@@ -122,13 +122,13 @@ public class ProjectInputServiceImpl implements ProjectInputService {
         );
         Optional<EmployeeModel> employeeModel = getEmployeeByID(projectDto.getEmployeeID());
         Optional<CompanyModel> companyModel = getCompanyByID(projectDto.getCompanyID());
-        if (ProjectValidation.isInvalidEmployeeAPI(employeeModel.get())) {
-            throw new ProjectCreationErrorDueToEmployeeAPIException(employeeModel.toString());
-        } else if (ProjectValidation.isInvalidCompanyAPI(companyModel.get())) {
-            throw new ProjectCreationErrorDueToCompanyAPIException(companyModel.toString());
+        if (ProjectValidation.isInvalidRemoteEmployeeAPI(employeeModel.get())) {
+            throw new RemoteEmployeeApiUnavailableException(employeeModel.toString());
+        } else if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel.get())) {
+            throw new RemoteCompanyApiUnavailableException(companyModel.toString());
         }
-        if (ProjectValidation.isInvalidEmployeeState(employeeModel.get())) {
-            throw new ProjectCreationErrorDueToNotAcceptedEmployeeStateException();
+        if (ProjectValidation.isInvalidRemoteEmployeeState(employeeModel.get())) {
+            throw new RemoteEmployeeStateNotAcceptableException();
         }
         if (!getProjectByInfo(projectDto).isEmpty()) {
             throw new ProjectAlreadyExistsException();

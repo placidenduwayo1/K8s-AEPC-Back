@@ -10,8 +10,8 @@ public class CompanyServiceProxyFallback implements CompanyServiceProxy {
     @Override
     public CompanyModel getCompanyByIdError(String companyID) {
         CompanyModel companyApiError = new CompanyModel();
-        companyApiError.setCompanyID(ExceptionWarnMsg.COMPANY_API_ERROR.getException());
-        companyApiError.setCompanyName(ExceptionWarnMsg.COMPANY_API_ERROR.getException());
+        companyApiError.setCompanyID(ExceptionWarnMsg.REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION.getException());
+        companyApiError.setCompanyName(ExceptionWarnMsg.REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION.getException());
         companyApiError.setCompanyType(null);
         return companyApiError;
     }

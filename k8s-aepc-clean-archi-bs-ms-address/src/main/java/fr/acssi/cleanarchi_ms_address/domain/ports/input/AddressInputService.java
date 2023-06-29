@@ -1,9 +1,9 @@
 package fr.acssi.cleanarchi_ms_address.domain.ports.input;
 
+import fr.acssi.cleanarchi_ms_address.domain.entity.Address;
 import fr.acssi.cleanarchi_ms_address.domain.exceptions.*;
 import fr.acssi.cleanarchi_ms_address.infra.input.feignclient.entity.EmployeeModel;
 import fr.acssi.cleanarchi_ms_address.infra.output.model.AddressDto;
-import fr.acssi.cleanarchi_ms_address.domain.entity.Address;
 
 import java.util.List;
 import java.util.Optional;

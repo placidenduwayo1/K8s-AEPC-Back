@@ -17,7 +17,6 @@
     <!-- modules of application-->
     <modules>
         <module>k8s-aepc-ms-config-service</module>
-        <module>k8s-aepc-exposed-k8s-services</module>
         <module>k8s-aepc-gateway-service</module>
         <module>k8s-aepc-clean-archi-bs-ms-address</module>
         <module>k8s-aepc-clean-archi-bs-ms-company</module>

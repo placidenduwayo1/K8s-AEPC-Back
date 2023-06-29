@@ -16,12 +16,12 @@ public interface ProjectInputService {
     Optional<EmployeeModel> getEmployeeByID(String employeeID);
     Optional<CompanyModel> getCompanyByID(String companyID);
     Project createProject(ProjectDto projectDto) throws ProjectAlreadyExistsException, ProjectFieldsEmptyException,
-            ProjectCreationErrorDueToEmployeeAPIException, ProjectCreationErrorDueToCompanyAPIException,
-            ProjectCreationErrorDueToNotAcceptedEmployeeStateException;
-    void deleteProject(String projectID) throws ProjectNotFoundException, CompanyIsAssiacetedToProjectException, EmployeeIsAssiacetedToProjectException;
+            RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException,
+            RemoteEmployeeStateNotAcceptableException;
+    void deleteProject(String projectID) throws ProjectNotFoundException, ProjectIsAssignedToCompanyException, ProjectIsAssignedToEmployeeException;
     Project updateProject(String projectID, ProjectDto projectDto) throws ProjectNotFoundException,
-            ProjectCreationErrorDueToEmployeeAPIException, ProjectCreationErrorDueToCompanyAPIException, ProjectFieldsEmptyException,
-            ProjectCreationErrorDueToNotAcceptedEmployeeStateException, ProjectAlreadyExistsException;
+            RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException, ProjectFieldsEmptyException,
+            RemoteEmployeeStateNotAcceptableException, ProjectAlreadyExistsException;
 
     List<Project> getProjectsAssignedToCompany(String companyID);
     List<Project> getProjectsAssignedToEmployee(String employeeID);

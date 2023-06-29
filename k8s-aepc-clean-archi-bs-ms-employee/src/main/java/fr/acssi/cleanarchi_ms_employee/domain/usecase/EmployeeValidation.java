@@ -4,13 +4,12 @@ import fr.acssi.cleanarchi_ms_employee.domain.exception_metrier.ExceptionWarnMsg
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.AddressModel;
 import fr.acssi.cleanarchi_ms_employee.infra.output.model.EmployeeDto;
 
-@SuppressWarnings("ALL")
 public class EmployeeValidation {
     private EmployeeValidation(){}
-    public static boolean areValidEmployeeRequiredFields(EmployeeDto employeeDto) {
-        return !employeeDto.getFirstname().isBlank()
-                && !employeeDto.getLastname().isBlank()
-                && !employeeDto.getAddressID().isBlank()
+    public static boolean areInvalidEmployeeRequiredFields(EmployeeDto employeeDto) {
+        return employeeDto.getFirstname().isBlank()
+                && employeeDto.getLastname().isBlank()
+                && employeeDto.getAddressID().isBlank()
                 ;
     }
 
@@ -27,9 +26,9 @@ public class EmployeeValidation {
         return firstname+"."+lastname+"@"+domain+".fr";
     }
 
-    public static boolean isInvalidAddressAPI(AddressModel addressModel){
+    public static boolean isInvalidRemoteAddressAPI(AddressModel addressModel){
         return addressModel
                 .getAddressID()
-                .equals(ExceptionWarnMsg.ADDRESS_API_ERROR.getException());
+                .equals(ExceptionWarnMsg.REMOTE_ADDRESS_API_UNAVAILABLE_EXCEPTION.getException());
     }
 }

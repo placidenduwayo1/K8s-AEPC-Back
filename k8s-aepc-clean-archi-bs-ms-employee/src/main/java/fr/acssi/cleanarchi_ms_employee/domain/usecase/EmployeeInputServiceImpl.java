@@ -29,11 +29,11 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
 
     @Override
     public Employee createEmployee(EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, EmployeeCreationErrorDueToAddressAPIException {
+            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException {
 
         EmployeeValidation.employeeFormatter(employeeDto);
 
-        if (!EmployeeValidation.areValidEmployeeRequiredFields(employeeDto)) {
+        if (EmployeeValidation.areInvalidEmployeeRequiredFields(employeeDto)) {
             throw new EmployeeFieldsInvalidException();
         }
 
@@ -41,8 +41,8 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
             throw new EmployeeAlreadyExistsException();
         }
         Optional<AddressModel> address = getAddressByID(employeeDto.getAddressID());
-        if(EmployeeValidation.isInvalidAddressAPI(address.get())){
-            throw new EmployeeCreationErrorDueToAddressAPIException(address.get().toString());
+        if(EmployeeValidation.isInvalidRemoteAddressAPI(address.get())){
+            throw new RemoteAddressApiUnavailableException(address.get().toString());
         }
         Employee employee = EmployeeMapper.mapDtoToClass(employeeDto);
 
@@ -74,10 +74,10 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
     }
     @Override
     public Employee updateEmployee(String employeeID, EmployeeDto employeeDto) throws EmployeeNotFoundException,
-            EmployeeFieldsInvalidException, EmployeeCreationErrorDueToAddressAPIException, EmployeeAlreadyExistsException {
+            EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException, EmployeeAlreadyExistsException {
         EmployeeValidation.employeeFormatter(employeeDto);
 
-        if (!EmployeeValidation.areValidEmployeeRequiredFields(employeeDto)) {
+        if (EmployeeValidation.areInvalidEmployeeRequiredFields(employeeDto)) {
             throw new EmployeeFieldsInvalidException();
         }
         if(!getEmployeeByInfo(employeeDto).isEmpty()){
@@ -100,8 +100,8 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
         );
 
         Optional<AddressModel> addressModel = getAddressByID(employeeDto.getAddressID());
-        if(!EmployeeValidation.isInvalidAddressAPI(addressModel.get())){
-            throw new EmployeeCreationErrorDueToAddressAPIException(addressModel.toString());
+        if(!EmployeeValidation.isInvalidRemoteAddressAPI(addressModel.get())){
+            throw new RemoteAddressApiUnavailableException(addressModel.toString());
         }
         employee.setAddress(addressModel.get());
 

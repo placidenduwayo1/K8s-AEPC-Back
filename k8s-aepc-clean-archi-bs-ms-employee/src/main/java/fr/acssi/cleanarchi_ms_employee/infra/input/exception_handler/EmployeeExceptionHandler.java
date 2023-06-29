@@ -21,8 +21,8 @@ public class EmployeeExceptionHandler {
     private ResponseEntity<String> handleEmployeeNotFoundException(){
         return new ResponseEntity<>(ExceptionWarnMsg.EMPLOYEE_NOT_FOUND_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler(value = EmployeeCreationErrorDueToAddressAPIException.class)
-    private ResponseEntity<Object> handleEmployeeCreationErrorDueToAddressAPIException(EmployeeCreationErrorDueToAddressAPIException e){
+    @ExceptionHandler(value = RemoteAddressApiUnavailableException.class)
+    private ResponseEntity<Object> handleEmployeeCreationErrorDueToAddressAPIException(RemoteAddressApiUnavailableException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
     @ExceptionHandler(value = EmployeeAssociatedProjectsException.class)

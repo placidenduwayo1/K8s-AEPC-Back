@@ -20,6 +20,7 @@ public class EmployeeModel {
     private String employeeID;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String email;
     private LocalDateTime hireDate;
     @Enumerated(EnumType.STRING)

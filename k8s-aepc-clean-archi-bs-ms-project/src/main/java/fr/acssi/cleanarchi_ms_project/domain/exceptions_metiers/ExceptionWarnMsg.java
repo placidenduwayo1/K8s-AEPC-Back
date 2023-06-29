@@ -1,14 +1,14 @@
 package fr.acssi.cleanarchi_ms_project.domain.exceptions_metiers;
 
 public enum ExceptionWarnMsg {
-    PROJECT_NOT_FOUND_EXCEPTION("Project not found exception"),
-    PROJECT_ALREADY_EXISTS_EXCEPTION("Project already exists exception"),
-    PROJECT_FIELDS_EMPTY_EXCEPTION("Project one or more fields invalid exception"),
-    EMPLOYEE_API_ERROR("Project, employee associated to project exception"),
-    EMPLOYEE_STATE_NOT_ACCEPTED_EXCEPTION("Project, employee state invalid exception "),
-    EMPLOYEE_IS_ASSOCIATED_TO_PROJECT_EXCEPTION("Project, employee already associated project exception"),
-    COMPANY_IS_ASSOCIATED_TO_PROJECT_EXCEPTION("Project, company already associated exception"),
-    COMPANY_API_ERROR("Project, company error");
+    PROJECT_NOT_FOUND_EXCEPTION("project not found exception"),
+    PROJECT_ALREADY_EXISTS_EXCEPTION("project already exists exception"),
+    PROJECT_FIELDS_EMPTY_EXCEPTION("project one or more fields invalid exception"),
+    REMOTE_EMPLOYEE_API_EXCEPTION("remote employee to assign to project unavailable exception"),
+    REMOTE_EMPLOYEE_STATE_NOT_ACCEPTABLE_EXCEPTION("remote employee state invalid exception "),
+    PROJECT_ALREADY_ASSIGNED_EMPLOYEE_EXCEPTION("Project, employee already associated project exception"),
+    PROJECT_ALREADY_ASSIGNED_COMPANY_EXCEPTION("Project, company already associated exception"),
+    REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION("Remote company not available");
 
     private final String exception;
 

@@ -20,24 +20,24 @@ public class ProjectExceptionsHandler {
     private ResponseEntity<Object> handleProjectFieldsEmptyException() {
         return new ResponseEntity<>(ExceptionWarnMsg.PROJECT_FIELDS_EMPTY_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler(value = ProjectCreationErrorDueToEmployeeAPIException.class)
-    private ResponseEntity<Object> handleProjectCreationErrorDueToEmployeeAPI(ProjectCreationErrorDueToEmployeeAPIException e) {
+    @ExceptionHandler(value = RemoteEmployeeApiUnavailableException.class)
+    private ResponseEntity<Object> handleProjectCreationErrorDueToEmployeeAPI(RemoteEmployeeApiUnavailableException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler(value = ProjectCreationErrorDueToCompanyAPIException.class)
-    private ResponseEntity<Object> handleProjectCreationErrorDueToCompanyAPI(ProjectCreationErrorDueToCompanyAPIException e) {
+    @ExceptionHandler(value = RemoteCompanyApiUnavailableException.class)
+    private ResponseEntity<Object> handleProjectCreationErrorDueToCompanyAPI(RemoteCompanyApiUnavailableException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler(value = ProjectCreationErrorDueToNotAcceptedEmployeeStateException.class)
+    @ExceptionHandler(value = RemoteEmployeeStateNotAcceptableException.class)
     private ResponseEntity<String> handleProjectCreationErrorDueToStateOfEmployeeException() {
-        return new ResponseEntity<>(ExceptionWarnMsg.EMPLOYEE_STATE_NOT_ACCEPTED_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(ExceptionWarnMsg.REMOTE_EMPLOYEE_STATE_NOT_ACCEPTABLE_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
-@ExceptionHandler(value = CompanyIsAssiacetedToProjectException.class)
+@ExceptionHandler(value = ProjectIsAssignedToCompanyException.class)
     private ResponseEntity<Object> handleCompanyIsAssociatedToProjectException(){
-        return new ResponseEntity<>(ExceptionWarnMsg.COMPANY_IS_ASSOCIATED_TO_PROJECT_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(ExceptionWarnMsg.PROJECT_ALREADY_ASSIGNED_COMPANY_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler(value = EmployeeIsAssiacetedToProjectException.class)
+    @ExceptionHandler(value = ProjectIsAssignedToEmployeeException.class)
     private ResponseEntity<String> handleEmployeeIsAssociatedToProjectException(){
-        return new ResponseEntity<>(ExceptionWarnMsg.EMPLOYEE_IS_ASSOCIATED_TO_PROJECT_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(ExceptionWarnMsg.PROJECT_ALREADY_ASSIGNED_EMPLOYEE_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
 }

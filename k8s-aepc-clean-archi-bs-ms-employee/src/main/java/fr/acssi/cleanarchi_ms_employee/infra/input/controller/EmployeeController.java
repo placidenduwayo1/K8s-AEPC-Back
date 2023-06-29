@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("CodeBlock2Expr")
 @RestController
 public class EmployeeController {
     @Value("${spring.message}")
@@ -41,7 +40,7 @@ public class EmployeeController {
 
     @PostMapping(value = "/employees")
     public Employee createEmployee(@RequestBody EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, EmployeeCreationErrorDueToAddressAPIException {
+            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException {
         Employee createdEmployee = employeeInputService.createEmployee(employeeDto);
         createdEmployee.setAddress(addressServiceProxy.getAddressById(createdEmployee.getAddressID()));
 
@@ -50,7 +49,7 @@ public class EmployeeController {
 
     @PutMapping(value = "/employees/{employeeID}")
     public Employee updateEmployee(@PathVariable(name = "employeeID") String employeeID, @RequestBody EmployeeDto employeeDto)
-            throws EmployeeNotFoundException, EmployeeFieldsInvalidException, EmployeeCreationErrorDueToAddressAPIException,
+            throws EmployeeNotFoundException, EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException,
             EmployeeAlreadyExistsException {
         Employee employee = employeeInputService.updateEmployee(employeeID, employeeDto);
         employee.setAddress(addressServiceProxy.getAddressById(employee.getAddressID()));

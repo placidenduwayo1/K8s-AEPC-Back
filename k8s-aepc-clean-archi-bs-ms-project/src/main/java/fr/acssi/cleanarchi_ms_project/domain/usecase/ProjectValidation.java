@@ -19,15 +19,15 @@ public class ProjectValidation {
                 && projectDto.getEmployeeID().isBlank();
     }
 
-    public static boolean isInvalidEmployeeAPI(EmployeeModel employeeModel){
-        return employeeModel.getEmployeeID().equals(ExceptionWarnMsg.EMPLOYEE_API_ERROR.getException());
+    public static boolean isInvalidRemoteEmployeeAPI(EmployeeModel employeeModel){
+        return employeeModel.getEmployeeID().equals(ExceptionWarnMsg.REMOTE_EMPLOYEE_API_EXCEPTION.getException());
     }
 
-    public static boolean isInvalidCompanyAPI(CompanyModel companyModel){
-        return  companyModel.getCompanyID().equals(ExceptionWarnMsg.COMPANY_API_ERROR.getException());
+    public static boolean isInvalidRemoteCompanyAPI(CompanyModel companyModel){
+        return  companyModel.getCompanyID().equals(ExceptionWarnMsg.REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION.getException());
     }
 
-    public static boolean isInvalidEmployeeState(EmployeeModel employeeModel){
+    public static boolean isInvalidRemoteEmployeeState(EmployeeModel employeeModel){
         return employeeModel.getEmployeeState().equals(EmployeeState.HISTORIZED);
     }
 }
