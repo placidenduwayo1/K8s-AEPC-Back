@@ -11,17 +11,17 @@
 
 - business microservices (bs-ms) of the application:
 
-	- ***k8s-clean-archi-bs-ms-address***
-	- ***k8s-clean-archi-bs-ms-employee***
-	- ***k8s-clean-archi-bs-ms-project***
-	- ***k8s-clean-archi-bs-ms-company***
+	- ***k8s-aepc-clean-archi-bs-ms-address***
+	- ***k8s-aepc-clean-archi-bs-ms-employee***
+	- ***k8s-aepc-clean-archi-bs-ms-project***
+	- ***k8s-aepc-clean-archi-bs-ms-company***
 
 - utility microservices:
-	- ***k8s-ms-config-service***: a config server to expose configurations to other services.
-	- ***k8s-gateway-service***: a gateway between the back and front.
+	- ***k8s-aepc-ms-config-service***: a config server to expose configurations to other services.
+	- ***k8s-aepc-gateway-service***: a gateway between the back and front.
 
 - each microservice gets its configuration properties from: 
-	- a spring cloud configuration server: ***k8s-ms-config-service***.
+	- a spring cloud configuration server: ***k8s-aepc-ms-config-service***.
 	- the config server pulls the needed configurations from a git center of all configuration files [git](https://github.com/placidenduwayo1/config-files-center.git).
 	
 - **(1)** microservices communicate each other; **(2)** management of alternative scenarios and resilience, **(3)** service discovery,load balancing and configuration:
