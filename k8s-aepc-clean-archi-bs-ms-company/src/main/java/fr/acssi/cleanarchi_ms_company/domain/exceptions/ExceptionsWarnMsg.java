@@ -4,7 +4,8 @@ public enum ExceptionsWarnMsg {
     COMPANY_ALREADY_EXISTS_EXCEPTION("Company already exists exception"),
     COMPANY_NOT_FOUND_EXCEPTION("Company not found exception"),
     COMPANY_ASSOCIATED_PROJECT_EXCEPTION ("Company project associated exception"),
-    COMPANY_FIELDS_EMPTY_EXCEPTION ("Company one or more fields invalid exception");
+    COMPANY_FIELDS_EMPTY_EXCEPTION ("Company one or more fields invalid exception"),
+    COMPANY_TYPE_INVALID_EXCEPTION("Company type invalid exception");
 
     private final String exception;
 

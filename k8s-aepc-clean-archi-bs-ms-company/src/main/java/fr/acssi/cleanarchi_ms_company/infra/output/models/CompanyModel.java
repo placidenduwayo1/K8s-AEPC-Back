@@ -1,6 +1,5 @@
 package fr.acssi.cleanarchi_ms_company.infra.output.models;
 
-import fr.acssi.cleanarchi_ms_company.domain.entity.CompanyType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +17,6 @@ public class CompanyModel {
     private String companyID;
     private String companyName;
     private String agency;
-    @Enumerated(EnumType.STRING)
-    private CompanyType companyType;
+    private String companyType;
     private LocalDateTime connectedDate;
 }

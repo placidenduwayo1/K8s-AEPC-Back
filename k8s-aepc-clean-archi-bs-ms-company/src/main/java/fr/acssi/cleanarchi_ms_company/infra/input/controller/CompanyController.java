@@ -34,7 +34,8 @@ public class CompanyController {
     }
 
     @PostMapping(value = "/companies")
-    public Company createCompany(@RequestBody CompanyDto companyDto) throws CompanyAlreadyExistsException, CompanyFieldsEmptyException {
+    public Company createCompany(@RequestBody CompanyDto companyDto) throws
+            CompanyAlreadyExistsException, CompanyFieldsEmptyException {
         return companyInputService.createCompany(companyDto);
     }
 

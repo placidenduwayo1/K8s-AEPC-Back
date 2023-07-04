@@ -23,10 +23,8 @@ public class EmployeeModel {
     @Column(unique = true)
     private String email;
     private LocalDateTime hireDate;
-    @Enumerated(EnumType.STRING)
-    private EmployeeState employeeState;
-    @Enumerated(EnumType.STRING)
-    private EmployeeType employeeType;
+    private String employeeState;
+    private String employeeType;
     private String addressID;
     @Transient
     private AddressModel address;

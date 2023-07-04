@@ -22,7 +22,14 @@ public class CompanyExceptionsHandler {
         return new ResponseEntity<>(ExceptionsWarnMsg.COMPANY_FIELDS_EMPTY_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
     }
     @ExceptionHandler(value = CompanyAssociedProjectsException.class)
-    private ResponseEntity<String> handleCompanyAssociedProjectsException(){
-        return new ResponseEntity<>(ExceptionsWarnMsg.COMPANY_ASSOCIATED_PROJECT_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
+    private ResponseEntity<String> handleCompanyAssociatedProjectsException(){
+        return new ResponseEntity<>(ExceptionsWarnMsg.COMPANY_ASSOCIATED_PROJECT_EXCEPTION.getException(),
+                HttpStatus.NOT_ACCEPTABLE);
+    }
+    @ExceptionHandler(value = CompanyTypeUnrecognizedException.class)
+    private ResponseEntity<String> handleCompanyTypeInvalidException(){
+        return new ResponseEntity<>(
+                ExceptionsWarnMsg.COMPANY_TYPE_INVALID_EXCEPTION.getException(),
+                HttpStatus.NOT_ACCEPTABLE );
     }
 }

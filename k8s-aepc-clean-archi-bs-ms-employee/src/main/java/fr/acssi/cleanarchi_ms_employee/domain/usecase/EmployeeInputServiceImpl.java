@@ -29,7 +29,8 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
 
     @Override
     public Employee createEmployee(EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException {
+            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException,
+            EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException{
 
         EmployeeValidation.employeeFormatter(employeeDto);
 
@@ -39,6 +40,12 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
 
         if (!getEmployeeByInfo(employeeDto).isEmpty()) {
             throw new EmployeeAlreadyExistsException();
+        }
+        if(!EmployeeValidation.isValidEmployeeState(employeeDto.getEmployeeState())){
+            throw new EmployeeStateUnrecognizedException();
+        }
+        if(!EmployeeValidation.isValidEmployeeType(employeeDto.getEmployeeType())){
+            throw new EmployeeTypeUnrecognizedException();
         }
         Optional<AddressModel> address = getAddressByID(employeeDto.getAddressID());
         if(EmployeeValidation.isInvalidRemoteAddressAPI(address.get())){
@@ -61,6 +68,11 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
     }
 
     @Override
+    public List<AddressModel> getAllAddresses() {
+        return employeeOutputService.getAllAddresses();
+    }
+
+    @Override
     public List<Employee> getEmployeeByInfo(EmployeeDto employeeDto) {
         return employeeOutputService.getEmployeeByInfo(employeeDto);
     }
@@ -74,7 +86,9 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
     }
     @Override
     public Employee updateEmployee(String employeeID, EmployeeDto employeeDto) throws EmployeeNotFoundException,
-            EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException, EmployeeAlreadyExistsException {
+            EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException, EmployeeAlreadyExistsException,
+            EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException{
+
         EmployeeValidation.employeeFormatter(employeeDto);
 
         if (EmployeeValidation.areInvalidEmployeeRequiredFields(employeeDto)) {
@@ -82,6 +96,11 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
         }
         if(!getEmployeeByInfo(employeeDto).isEmpty()){
             throw new EmployeeAlreadyExistsException();
+        }
+        if(!EmployeeValidation.isValidEmployeeState(employeeDto.getEmployeeState())){
+            throw new EmployeeStateUnrecognizedException();
+        } else if (!EmployeeValidation.isValidEmployeeType(employeeDto.getEmployeeType())) {
+            throw new EmployeeTypeUnrecognizedException();
         }
 
         Employee employee = EmployeeMapper.mapDtoToClass(employeeDto);

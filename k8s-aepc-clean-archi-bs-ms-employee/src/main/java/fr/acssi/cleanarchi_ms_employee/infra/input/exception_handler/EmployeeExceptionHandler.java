@@ -27,6 +27,20 @@ public class EmployeeExceptionHandler {
     }
     @ExceptionHandler(value = EmployeeAssociatedProjectsException.class)
     private ResponseEntity<String> handleEmployeeAssociatedProjectsException(){
-        return new ResponseEntity<>(ExceptionWarnMsg.EMPLOYEE_ASSOCIATED_PROJECTS_EXCEPTION.getException(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(
+                ExceptionWarnMsg.EMPLOYEE_ASSOCIATED_PROJECTS_EXCEPTION.getException(),
+                HttpStatus.NOT_ACCEPTABLE);
+    }
+    @ExceptionHandler(value = EmployeeStateUnrecognizedException.class)
+    private ResponseEntity<String> handleEmployeeStateUnrecognizedException(){
+        return new ResponseEntity<>(
+                ExceptionWarnMsg.EMPLOYEE_UNRECOGNIZED_STATE_EXCEPTION.getException(),
+                HttpStatus.NOT_ACCEPTABLE);
+    }
+    @ExceptionHandler(value = EmployeeTypeUnrecognizedException.class)
+    private ResponseEntity<String> handleEmployeeTypeUnrecognizedException(){
+        return new ResponseEntity<>(
+                ExceptionWarnMsg.EMPLOYEE_UNRECOGNIZED_TYPE_EXCEPTION.getException(),
+                HttpStatus.NOT_ACCEPTABLE);
     }
 }

@@ -6,13 +6,14 @@ public class Company {
     private String companyID;
     private String companyName;
     private String agency;
-    private CompanyType companyType;
+    private String companyType;
     private LocalDateTime connectedDate;
 
     public Company() {
     }
 
-    public Company(String companyID, String companyName, CompanyType companyType, LocalDateTime connectedDate, String agency) {
+    public Company(String companyID, String companyName,
+                   String companyType, LocalDateTime connectedDate, String agency) {
         this.companyID = companyID;
         this.companyName = companyName;
         this.companyType = companyType;
@@ -36,11 +37,11 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public CompanyType getCompanyType() {
+    public String getCompanyType() {
         return companyType;
     }
 
-    public void setCompanyType(CompanyType companyType) {
+    public void setCompanyType(String companyType) {
         this.companyType = companyType;
     }
 

@@ -1,16 +1,14 @@
 package fr.acssi.cleanarchi_ms_company.infra.output.models;
 
-import fr.acssi.cleanarchi_ms_company.domain.entity.CompanyType;
-
 public class CompanyDto {
     private String companyName;
     private String agency;
-    private CompanyType companyType;
+    private String companyType;
 
     public CompanyDto() {
     }
 
-    public CompanyDto(String companyName, CompanyType companyType, String agency) {
+    public CompanyDto(String companyName, String companyType, String agency) {
         this.companyName = companyName;
         this.companyType = companyType;
         this.agency = agency;
@@ -24,11 +22,11 @@ public class CompanyDto {
         this.companyName = companyName;
     }
 
-    public CompanyType getCompanyType() {
+    public String getCompanyType() {
         return companyType;
     }
 
-    public void setCompanyType(CompanyType companyType) {
+    public void setCompanyType(String companyType) {
         this.companyType = companyType;
     }
 

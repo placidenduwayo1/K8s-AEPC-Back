@@ -1,12 +1,20 @@
 package fr.acssi.cleanarchi_ms_employee.domain.entity;
 
 public enum EmployeeType {
-    CTO,
-    CEO,
-    HR,
-    TECH_M,
-    COM_M,
-    EMPL,
-    TAM,
-    SE
+    CTO("cto"),
+    CEO("ceo"),
+    HR("hr"),
+    TECH_M("tech-manager"),
+    COM_M("com-manager"),
+    EMPL("employee"),
+    TAM("talent-acquis-manager"),
+    SE("software-engineer");
+    private final String employeeType;
+
+    EmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
+    public String getEmployeeType() {
+        return employeeType;
+    }
 }

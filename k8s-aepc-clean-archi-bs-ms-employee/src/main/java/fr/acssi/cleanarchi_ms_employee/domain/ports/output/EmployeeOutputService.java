@@ -13,6 +13,7 @@ public interface EmployeeOutputService {
     List<Employee> getAllEmployees();
     Employee createEmployee(Employee employee);
     AddressModel getAddressByID(String addressD);
+    List<AddressModel> getAllAddresses();
     List<Employee> getEmployeeByInfo(EmployeeDto employeeDto);
     Optional<Employee> getEmployeeByID(String employeeID) throws EmployeeNotFoundException;
     Employee updateEmployee(Employee employee);

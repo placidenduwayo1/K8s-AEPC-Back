@@ -47,6 +47,12 @@ public class EmployeeOutputServiceImpl implements EmployeeOutputService {
     public AddressModel getAddressByID(String addressID) {
         return addressServiceProxy.getAddressById(addressID);
     }
+
+    @Override
+    public List<AddressModel> getAllAddresses() {
+        return addressServiceProxy.getAllAddresses();
+    }
+
     @Override
     public List<Employee> getEmployeeByInfo(EmployeeDto employeeDto) {
         List<EmployeeModel> employeeModels = employeeRepository.findByFirstnameAndLastnameAndAddressID(

@@ -1,15 +1,12 @@
 package fr.acssi.cleanarchi_ms_company.domain.usecase;
 
 import fr.acssi.cleanarchi_ms_company.domain.entity.Company;
-import fr.acssi.cleanarchi_ms_company.domain.exceptions.CompanyAssociedProjectsException;
-import fr.acssi.cleanarchi_ms_company.domain.exceptions.CompanyFieldsEmptyException;
-import fr.acssi.cleanarchi_ms_company.domain.exceptions.CompanyNotFoundException;
+import fr.acssi.cleanarchi_ms_company.domain.exceptions.*;
 import fr.acssi.cleanarchi_ms_company.domain.ports.input.CompanyInputService;
 import fr.acssi.cleanarchi_ms_company.domain.ports.output.CompanyOutputService;
 import fr.acssi.cleanarchi_ms_company.infra.input.feignclient.model.ProjectModel;
 import fr.acssi.cleanarchi_ms_company.infra.output.mapper.CompanyMapper;
 import fr.acssi.cleanarchi_ms_company.infra.output.models.CompanyDto;
-import fr.acssi.cleanarchi_ms_company.domain.exceptions.CompanyAlreadyExistsException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -44,13 +41,17 @@ public class CompanyInputServiceImpl implements CompanyInputService {
     }
 
     @Override
-    public Company createCompany(CompanyDto companyDto) throws CompanyAlreadyExistsException, CompanyFieldsEmptyException {
+    public Company createCompany(CompanyDto companyDto) throws CompanyAlreadyExistsException,
+            CompanyFieldsEmptyException, CompanyTypeUnrecognizedException {
        CompanyValidation.companyFormatter(companyDto);
         if (CompanyValidation.areInvalidCompanyTextFields(companyDto)) {
             throw new CompanyFieldsEmptyException();
         }
         if (!getCompanyByInfos(companyDto).isEmpty()) {
             throw new CompanyAlreadyExistsException();
+        }
+        if(!CompanyValidation.isValidCompanyType(companyDto.getCompanyType())){
+            throw new CompanyTypeUnrecognizedException();
         }
         Company company = CompanyMapper.dtoToClass(companyDto);
         company.setCompanyID(UUID.randomUUID().toString());
@@ -60,13 +61,16 @@ public class CompanyInputServiceImpl implements CompanyInputService {
 
     @Override
     public Company updateCompany(String companyID, CompanyDto companyDto) throws CompanyNotFoundException,
-            CompanyFieldsEmptyException, CompanyAlreadyExistsException {
+            CompanyFieldsEmptyException, CompanyAlreadyExistsException, CompanyTypeUnrecognizedException {
         CompanyValidation.companyFormatter(companyDto);
         if(CompanyValidation.areInvalidCompanyTextFields(companyDto)){
             throw new CompanyFieldsEmptyException();
         }
         if(!getCompanyByInfos(companyDto).isEmpty()){
             throw new CompanyAlreadyExistsException();
+        }
+        if(!CompanyValidation.isValidCompanyType(companyDto.getCompanyType())){
+            throw new CompanyTypeUnrecognizedException();
         }
         Company company = CompanyMapper.dtoToClass(companyDto);
         Optional<Company> createdCompany = getCompanyByID(companyID);

@@ -10,8 +10,8 @@ public class Employee {
     private String lastname;
     private String email;
     private LocalDateTime hireDate;
-    private EmployeeState employeeState;
-    private EmployeeType employeeType;
+    private String employeeState;
+    private String employeeType;
     private String addressID;
     private AddressModel address;
 
@@ -19,7 +19,7 @@ public class Employee {
     }
 
     public Employee(String employeeID, String firstname, String lastname, String email,
-                    LocalDateTime hireDate, EmployeeState state, EmployeeType employeeType,
+                    LocalDateTime hireDate, String state, String employeeType,
                     String addressID, AddressModel address) {
         this.employeeID = employeeID;
         this.firstname = firstname;
@@ -88,19 +88,19 @@ public class Employee {
         this.address = address;
     }
 
-    public EmployeeState getEmployeeState() {
+    public String getEmployeeState() {
         return employeeState;
     }
 
-    public void setEmployeeState(EmployeeState employeeState) {
+    public void setEmployeeState(String employeeState) {
         this.employeeState = employeeState;
     }
 
-    public EmployeeType getEmployeeType() {
+    public String getEmployeeType() {
         return employeeType;
     }
 
-    public void setEmployeeType(EmployeeType employeeType) {
+    public void setEmployeeType(String employeeType) {
         this.employeeType = employeeType;
     }
 }

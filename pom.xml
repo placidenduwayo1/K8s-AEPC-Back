@@ -21,7 +21,6 @@
         <module>k8s-aepc-clean-archi-bs-ms-address</module>
         <module>k8s-aepc-clean-archi-bs-ms-company</module>
         <module>k8s-aepc-clean-archi-bs-ms-employee</module>
-        <module>k8s-aepc-clean-archi-bs-ms-project</module>
     </modules>
 
 </project>

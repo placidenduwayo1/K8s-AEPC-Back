@@ -2,6 +2,7 @@ package fr.acssi.cleanarchi_ms_employee.infra.input.controller;
 
 import fr.acssi.cleanarchi_ms_employee.domain.exception_metrier.*;
 import fr.acssi.cleanarchi_ms_employee.domain.ports.input.EmployeeInputService;
+import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.AddressModel;
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.ProjectModel;
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.services.AddressServiceProxy;
 import fr.acssi.cleanarchi_ms_employee.domain.entity.Employee;
@@ -40,7 +41,8 @@ public class EmployeeController {
 
     @PostMapping(value = "/employees")
     public Employee createEmployee(@RequestBody EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException {
+            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException, EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException{
         Employee createdEmployee = employeeInputService.createEmployee(employeeDto);
         createdEmployee.setAddress(addressServiceProxy.getAddressById(createdEmployee.getAddressID()));
 
@@ -50,7 +52,7 @@ public class EmployeeController {
     @PutMapping(value = "/employees/{employeeID}")
     public Employee updateEmployee(@PathVariable(name = "employeeID") String employeeID, @RequestBody EmployeeDto employeeDto)
             throws EmployeeNotFoundException, EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException,
-            EmployeeAlreadyExistsException {
+            EmployeeAlreadyExistsException, EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException {
         Employee employee = employeeInputService.updateEmployee(employeeID, employeeDto);
         employee.setAddress(addressServiceProxy.getAddressById(employee.getAddressID()));
         return employee;
@@ -80,5 +82,9 @@ public class EmployeeController {
     @GetMapping(value = "/projects/employees/{employeeID}", produces = "application/json")
     public List<ProjectModel> getProjectsAssignedToEmployee(@PathVariable(name = "employeeID") String employeeID) throws EmployeeNotFoundException {
         return employeeInputService.getProjectsAssignedToEmployee(employeeID);
+    }
+    @GetMapping(value = "/employees/addresses", produces = "application/json")
+    public List<AddressModel> getAllAddresses(){
+        return addressServiceProxy.getAllAddresses();
     }
 }

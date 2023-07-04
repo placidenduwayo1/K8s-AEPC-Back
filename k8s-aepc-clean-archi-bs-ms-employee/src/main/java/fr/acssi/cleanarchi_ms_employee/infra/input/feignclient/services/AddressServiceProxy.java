@@ -7,9 +7,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @FeignClient(name = "k8s-aepc-bs-ms-address", fallback = AddressServiceProxyFallback.class)
 @Qualifier("address-service-proxy")
 public interface AddressServiceProxy {
     @GetMapping(value = "/addresses/{addressID}", produces = "application/json")
     AddressModel getAddressById(@PathVariable(name = "addressID") String addressID);
+    @GetMapping(value = "/addresses")
+    List<AddressModel> getAllAddresses();
 }
