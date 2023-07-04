@@ -6,7 +6,7 @@ public class CompanyModel {
     private String companyID;
     private String companyName;
     private String agency;
-    private CompanyType companyType;
+    private String companyType;
     private LocalDateTime connectedDate;
 
     public String getCompanyID() {
@@ -25,11 +25,11 @@ public class CompanyModel {
         this.companyName = companyName;
     }
 
-    public CompanyType getCompanyType() {
+    public String getCompanyType() {
         return companyType;
     }
 
-    public void setCompanyType(CompanyType companyType) {
+    public void setCompanyType(String companyType) {
         this.companyType = companyType;
     }
 

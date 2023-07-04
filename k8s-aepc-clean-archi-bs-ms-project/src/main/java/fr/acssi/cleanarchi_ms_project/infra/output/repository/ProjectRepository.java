@@ -11,7 +11,7 @@ public interface ProjectRepository extends JpaRepository<ProjectModel, String> {
     List<ProjectModel> findByProjectNameAndDescriptionAndProjectStateAndEmployeeIDAndCompanyID(
             String projectName,
             String description,
-            ProjectState projectState,
+            String projectState,
             String employeeID,
             String companyID);
     List<ProjectModel> findByCompanyID(String companyID);

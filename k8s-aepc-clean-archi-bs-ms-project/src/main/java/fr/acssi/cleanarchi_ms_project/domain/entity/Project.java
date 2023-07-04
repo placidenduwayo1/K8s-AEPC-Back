@@ -9,8 +9,8 @@ public class Project {
     private String projectID;
     private String projectName;
     private String description;
-    private Priority priority;
-    private ProjectState projectState;
+    private byte priority;
+    private String projectState;
     private LocalDateTime createdDate;
     private String employeeID;
     private EmployeeModel employee;
@@ -20,8 +20,8 @@ public class Project {
     public Project() {
     }
 
-    public Project(String projectName, String description, Priority priority,
-                   ProjectState projectState, String employeeID, EmployeeModel employeeModel,
+    public Project(String projectName, String description, byte priority,
+                   String projectState, String employeeID, EmployeeModel employeeModel,
                    String companyID, CompanyModel companyModel) {
         this.projectName = projectName;
         this.description = description;
@@ -57,19 +57,19 @@ public class Project {
         this.description = description;
     }
 
-    public Priority getPriority() {
+    public byte getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(byte priority) {
         this.priority = priority;
     }
 
-    public ProjectState getProjectState() {
+    public String getProjectState() {
         return projectState;
     }
 
-    public void setProjectState(ProjectState projectState) {
+    public void setProjectState(String projectState) {
         this.projectState = projectState;
     }
 

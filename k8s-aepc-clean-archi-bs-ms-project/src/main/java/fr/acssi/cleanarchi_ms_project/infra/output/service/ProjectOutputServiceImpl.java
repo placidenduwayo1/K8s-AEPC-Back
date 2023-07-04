@@ -33,13 +33,16 @@ public class ProjectOutputServiceImpl implements ProjectOutputService {
         this.companyServiceProxy = companyServiceProxy;
     }
 
+    private List<Project> innerUtilityMethod(List<ProjectModel> projectModels){
+        return projectModels.stream()
+                .map(ProjectMapper::mapToClass)
+                .toList();
+    }
+
     @Override
     public List<Project> getAllProjects() {
         List<ProjectModel> projectModels = projectRepository.findByOrderByCreatedDateDesc();
-        return projectModels
-                .stream()
-                .map(ProjectMapper::mapToClass)
-                .toList();
+        return innerUtilityMethod(projectModels);
     }
 
     @Override
@@ -48,10 +51,7 @@ public class ProjectOutputServiceImpl implements ProjectOutputService {
                 projectDto.getProjectName(), projectDto.getDescription(), projectDto.getProjectState(),
                 projectDto.getEmployeeID(), projectDto.getCompanyID()
         );
-        return projectModels
-                .stream()
-                .map(ProjectMapper::mapToClass)
-                .toList();
+        return innerUtilityMethod(projectModels);
     }
 
     @Override
@@ -95,17 +95,12 @@ public class ProjectOutputServiceImpl implements ProjectOutputService {
     @Override
     public List<Project> getProjectsAssignedToCompany(String companyID) {
         List<ProjectModel> projects = projectRepository.findByCompanyID(companyID);
-        return projects
-                .stream()
-                .map(ProjectMapper::mapToClass)
-                .toList();
+        return innerUtilityMethod(projects);
     }
 
     @Override
     public List<Project> getProjectsAssignedToEmployee(String employeeID) {
         List<ProjectModel> projects = projectRepository.findByEmployeeID(employeeID);
-        return projects.stream()
-                .map(ProjectMapper::mapToClass)
-                .toList();
+        return innerUtilityMethod(projects);
     }
 }

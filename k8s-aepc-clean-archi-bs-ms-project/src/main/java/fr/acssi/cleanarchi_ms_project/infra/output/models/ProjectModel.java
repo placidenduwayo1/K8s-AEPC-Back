@@ -19,10 +19,8 @@ public class ProjectModel {
     private String projectID;
     private String projectName;
     private String description;
-    @Enumerated(EnumType.STRING)
-    private Priority priority;
-    @Enumerated(EnumType.STRING)
-    private ProjectState projectState;
+    private byte priority;
+    private String projectState;
     private LocalDateTime createdDate;
     private String employeeID;
     @Transient

@@ -22,6 +22,34 @@ public class ProjectInputServiceImpl implements ProjectInputService {
     public ProjectInputServiceImpl(ProjectOutputService projectOutputService) {
         this.projectOutputService = projectOutputService;
     }
+
+    private void innerUtilityCheckProject(ProjectDto projectDto) throws ProjectFieldsEmptyException,
+            ProjectPriorityUnrecognisedException, ProjectStateUnrecognisedException {
+        if (ProjectValidation.areInvalidProjectFields(projectDto)) {
+            throw new ProjectFieldsEmptyException();
+        }
+        else if(!ProjectValidation.isValidPriority(projectDto.getPriority())){
+            throw new ProjectPriorityUnrecognisedException();
+        }
+        else if (! ProjectValidation.isValidProjectState(projectDto.getProjectState())){
+            throw new ProjectStateUnrecognisedException();
+        }
+    }
+
+    private void innerUtilityCheckEmployee(EmployeeModel employeeModel) throws
+            RemoteEmployeeApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
+        if (ProjectValidation.isInvalidRemoteEmployeeAPI(employeeModel)) {
+            throw new RemoteEmployeeApiUnavailableException(employeeModel.toString());
+        } else if (ProjectValidation.isInvalidRemoteEmployeeState(employeeModel)) {
+            throw new RemoteEmployeeStateNotAcceptableException();
+        }
+    }
+    private void innerUtilityCheckCompany(CompanyModel companyModel) throws
+            RemoteEmployeeApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
+        if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel)) {
+            throw new RemoteEmployeeApiUnavailableException(companyModel.toString());
+        }
+    }
     @Override
     public List<Project> getAllProjects() {
         return projectOutputService.getAllProjects();
@@ -56,10 +84,7 @@ public class ProjectInputServiceImpl implements ProjectInputService {
             ProjectFieldsEmptyException, RemoteEmployeeApiUnavailableException,
             RemoteCompanyApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
         ProjectValidation.projectFormatter(projectDto);
-
-        if (ProjectValidation.areInvalidProjectFields(projectDto)) {
-            throw new ProjectFieldsEmptyException();
-        }
+        innerUtilityCheckProject(projectDto);
         List<Project> projects = getProjectByInfo(projectDto);
         if (!projects.isEmpty()) {
             throw new ProjectAlreadyExistsException();
@@ -68,17 +93,12 @@ public class ProjectInputServiceImpl implements ProjectInputService {
         Project project = ProjectMapper.dtoToClass(projectDto);
 
         Optional<EmployeeModel> employeeModel = getEmployeeByID(projectDto.getEmployeeID());
+        innerUtilityCheckEmployee(employeeModel.get());
         Optional<CompanyModel> companyModel = getCompanyByID(projectDto.getCompanyID());
+        innerUtilityCheckCompany(companyModel.get());
 
-        if (ProjectValidation.isInvalidRemoteEmployeeAPI(employeeModel.get())) {
-            throw new RemoteEmployeeApiUnavailableException(employeeModel.toString());
-        }
         if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel.get())) {
             throw new RemoteCompanyApiUnavailableException(companyModel.toString());
-        }
-
-        if (ProjectValidation.isInvalidRemoteEmployeeState(employeeModel.get())) {
-            throw new RemoteEmployeeStateNotAcceptableException();
         }
 
         project.setProjectID(UUID.randomUUID().toString());
@@ -106,10 +126,10 @@ public class ProjectInputServiceImpl implements ProjectInputService {
     public Project updateProject(String projectID, ProjectDto projectDto) throws ProjectNotFoundException,
             RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException, ProjectFieldsEmptyException,
             RemoteEmployeeStateNotAcceptableException, ProjectAlreadyExistsException {
+
         ProjectValidation.projectFormatter(projectDto);
-        if (ProjectValidation.areInvalidProjectFields(projectDto)) {
-            throw new ProjectFieldsEmptyException();
-        }
+        innerUtilityCheckProject(projectDto);
+
         Project project = ProjectMapper.dtoToClass(projectDto);
         Optional<Project> createdProject = projectOutputService.getProjectByID(projectID);
         createdProject.ifPresentOrElse(
@@ -121,15 +141,10 @@ public class ProjectInputServiceImpl implements ProjectInputService {
                 ProjectNotFoundException::new
         );
         Optional<EmployeeModel> employeeModel = getEmployeeByID(projectDto.getEmployeeID());
+        innerUtilityCheckEmployee(employeeModel.get());
         Optional<CompanyModel> companyModel = getCompanyByID(projectDto.getCompanyID());
-        if (ProjectValidation.isInvalidRemoteEmployeeAPI(employeeModel.get())) {
-            throw new RemoteEmployeeApiUnavailableException(employeeModel.toString());
-        } else if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel.get())) {
-            throw new RemoteCompanyApiUnavailableException(companyModel.toString());
-        }
-        if (ProjectValidation.isInvalidRemoteEmployeeState(employeeModel.get())) {
-            throw new RemoteEmployeeStateNotAcceptableException();
-        }
+        innerUtilityCheckCompany(companyModel.get());
+
         if (!getProjectByInfo(projectDto).isEmpty()) {
             throw new ProjectAlreadyExistsException();
         }

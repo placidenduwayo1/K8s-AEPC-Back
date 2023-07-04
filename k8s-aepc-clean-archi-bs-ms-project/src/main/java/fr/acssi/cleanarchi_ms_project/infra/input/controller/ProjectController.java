@@ -34,13 +34,15 @@ public class ProjectController {
         this.companyServiceProxy = companyServiceProxy;
     }
 
+    private void innerUtilityMethod(Project project){
+        project.setCompany(companyServiceProxy.getCompanyByIdError(project.getCompanyID()));
+        project.setEmployee(employeeServiceProxy.getEmployeeByIdError(project.getEmployeeID()));
+    }
+
     @GetMapping(value = "/projects", produces = "application/json")
     public List<Project> getAllProjects() {
         List<Project> projects = projectInputService.getAllProjects();
-        projects.forEach(project -> {
-            project.setCompany(companyServiceProxy.getCompanyByIdError(project.getCompanyID()));
-            project.setEmployee(employeeServiceProxy.getEmployeeByIdError(project.getEmployeeID()));
-        });
+        projects.forEach(this::innerUtilityMethod);
         return projects;
     }
 
@@ -48,8 +50,7 @@ public class ProjectController {
     public Project createProject(@RequestBody ProjectDto projectDto) throws ProjectAlreadyExistsException,
             ProjectFieldsEmptyException, RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException, RemoteEmployeeStateNotAcceptableException {
         Project createdProject = projectInputService.createProject(projectDto);
-        createdProject.setEmployee(employeeServiceProxy.getEmployeeByIdError(createdProject.getEmployeeID()));
-        createdProject.setCompany(companyServiceProxy.getCompanyByIdError(createdProject.getCompanyID()));
+        innerUtilityMethod(createdProject);
         return createdProject;
     }
 
@@ -58,8 +59,7 @@ public class ProjectController {
             ProjectNotFoundException, RemoteEmployeeApiUnavailableException, RemoteCompanyApiUnavailableException,
             ProjectFieldsEmptyException, RemoteEmployeeStateNotAcceptableException, ProjectAlreadyExistsException {
         Project updatedProject = projectInputService.updateProject(projectID, projectDto);
-        updatedProject.setEmployee(employeeServiceProxy.getEmployeeByIdError(updatedProject.getEmployeeID()));
-        updatedProject.setCompany(companyServiceProxy.getCompanyByIdError(updatedProject.getCompanyID()));
+        innerUtilityMethod(updatedProject);
         return updatedProject;
     }
 
@@ -78,8 +78,7 @@ public class ProjectController {
     @GetMapping(value = "/projects/{projectID}", produces = "application/json")
     public Optional<Project> getProject(@PathVariable(name = "projectID") String projectID) throws ProjectNotFoundException {
         Optional<Project> project = projectInputService.getProjectByID(projectID);
-        project.get().setCompany(companyServiceProxy.getCompanyByIdError(project.get().getCompanyID()));
-        project.get().setEmployee(employeeServiceProxy.getEmployeeByIdError(project.get().getEmployeeID()));
+        innerUtilityMethod(project.get());
 
         return project;
     }
@@ -87,10 +86,7 @@ public class ProjectController {
     @GetMapping(value = "/projects/companies/{companyID}", produces = "application/json")
     public List<Project> getProjectAssignedToCompany(@PathVariable(name = "companyID") String companyID) {
         List<Project> projects = projectInputService.getProjectsAssignedToCompany(companyID);
-        projects.forEach(project -> {
-            project.setCompany(companyServiceProxy.getCompanyByIdError(project.getCompanyID()));
-            project.setEmployee(employeeServiceProxy.getEmployeeByIdError(project.getEmployeeID()));
-        });
+      projects.forEach(this::innerUtilityMethod);
 
         return projects;
     }
@@ -98,10 +94,7 @@ public class ProjectController {
     @GetMapping(value = "/projects/employees/{employeeID}", produces = "application/json")
     public List<Project> getProjectAssignedToEmployee(@PathVariable(name = "employeeID") String employeeID) {
         List<Project> projects = projectInputService.getProjectsAssignedToEmployee(employeeID);
-        projects.forEach(project -> {
-            project.setEmployee(employeeServiceProxy.getEmployeeByIdError(project.getEmployeeID()));
-            project.setCompany(companyServiceProxy.getCompanyByIdError(project.getCompanyID()));
-        });
+        projects.forEach(this::innerUtilityMethod);
         return projects;
     }
 }

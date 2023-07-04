@@ -8,7 +8,9 @@ public enum ExceptionWarnMsg {
     REMOTE_EMPLOYEE_STATE_NOT_ACCEPTABLE_EXCEPTION("remote employee state invalid exception "),
     PROJECT_ALREADY_ASSIGNED_EMPLOYEE_EXCEPTION("Project, employee already associated project exception"),
     PROJECT_ALREADY_ASSIGNED_COMPANY_EXCEPTION("Project, company already associated exception"),
-    REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION("Remote company not available");
+    REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION("Remote company not available"),
+    PROJECT_PRIORITY_UNRECOGNIZED_EXCEPTION("Project priority unrecognized exception"),
+    PROJECT_STATE_UNRECOGNIZED_EXCEPTION("Project state unrecognized exception");
 
     private final String exception;
 

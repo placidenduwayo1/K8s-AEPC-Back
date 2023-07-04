@@ -6,8 +6,8 @@ import fr.acssi.cleanarchi_ms_project.domain.entity.ProjectState;
 public class ProjectDto {
     private String projectName;
     private String description;
-    private Priority priority;
-    private ProjectState projectState;
+    private byte priority;
+    private String projectState;
     private String employeeID;
     private String companyID;
 
@@ -27,19 +27,19 @@ public class ProjectDto {
         this.description = description;
     }
 
-    public Priority getPriority() {
+    public byte getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(byte priority) {
         this.priority = priority;
     }
 
-    public ProjectState getProjectState() {
+    public String getProjectState() {
         return projectState;
     }
 
-    public void setProjectState(ProjectState projectState) {
+    public void setProjectState(String projectState) {
         this.projectState = projectState;
     }
 
