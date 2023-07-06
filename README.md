@@ -24,8 +24,8 @@
 	- a spring cloud configuration server: ***k8s-aepc-ms-config-service***.
 	- the config server pulls the needed configurations from a git center of all configuration files [git](https://github.com/placidenduwayo1/config-files-center.git).
 	
-- **(1)** microservices communicate each other; **(2)** management of alternative scenarios and resilience, **(3)** service discovery,load balancing and configuration:
-	- (1) **spring cloud openfeign**.
+- microservices communicate each other using **(1)**; alternative scenarios and resilience are manager using **(2)** and services are discovered, loadbalanced and configured using **(3)**:
+	- (1) **spring cloud openfeign** 
 	- (2) spring cloud circuit breaker: **Resilience4J**.
 	- (3) **spring cloud kubernetes** dependecy to permit microservices to be discovered each other, load balanced and configured.
 
