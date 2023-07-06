@@ -8,8 +8,9 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyModel, String> {
     List<CompanyModel> findByOrderByCompanyIDAsc();
-    List<CompanyModel> findByCompanyNameAndAgencyAndCompanyType(
+    List<CompanyModel> findByCompanyNameAndAgencyAndCompanyTypeAndCompanyConnectState(
             String companyName,
             String agency,
-            String companyType);
+            String companyType,
+            String companyConnectState);
 }

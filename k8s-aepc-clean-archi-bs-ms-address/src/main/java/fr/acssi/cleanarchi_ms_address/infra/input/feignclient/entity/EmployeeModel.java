@@ -9,8 +9,8 @@ public class EmployeeModel {
     private String lastname;
     private String email;
     private LocalDateTime hireDate;
-    private EmployeeState employeeState;
-    private EmployeeType employeeType;
+    private String employeeState;
+    private String employeeType;
 
     public String getEmployeeID() {
         return employeeID;
@@ -52,19 +52,19 @@ public class EmployeeModel {
         this.hireDate = hireDate;
     }
 
-    public EmployeeState getEmployeeState() {
+    public String getEmployeeState() {
         return employeeState;
     }
 
-    public void setEmployeeState(EmployeeState employeeState) {
+    public void setEmployeeState(String employeeState) {
         this.employeeState = employeeState;
     }
 
-    public EmployeeType getEmployeeType() {
+    public String getEmployeeType() {
         return employeeType;
     }
 
-    public void setEmployeeType(EmployeeType employeeType) {
+    public void setEmployeeType(String employeeType) {
         this.employeeType = employeeType;
     }
 

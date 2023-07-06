@@ -6,8 +6,8 @@ public class ProjectModel {
     private String projectID;
     private String projectName;
     private String description;
-    private Priority priority;
-    private ProjectState projectState;
+    private byte priority;
+    private String projectState;
     private LocalDateTime createdDate;
 
     public String getProjectID() {
@@ -34,19 +34,19 @@ public class ProjectModel {
         this.description = description;
     }
 
-    public Priority getPriority() {
+    public byte getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(byte priority) {
         this.priority = priority;
     }
 
-    public ProjectState getProjectState() {
+    public String getProjectState() {
         return projectState;
     }
 
-    public void setProjectState(ProjectState projectState) {
+    public void setProjectState(String projectState) {
         this.projectState = projectState;
     }
 

@@ -52,9 +52,14 @@ public class ProjectInputServiceImpl implements ProjectInputService {
         }
     }
     private void innerUtilityCheckCompany(CompanyModel companyModel) throws
-            RemoteCompanyApiUnavailableException {
+            RemoteCompanyApiUnavailableException,
+            RemoteCompanyConnectionStateUnauthorized {
         if (ProjectValidation.isInvalidRemoteCompanyAPI(companyModel)) {
             throw new RemoteCompanyApiUnavailableException(companyModel.toString());
+        } else if (ProjectValidation
+                .isInvalidRemoteCompanyConnectionState(companyModel
+                        .getCompanyConnectState())) {
+            throw new RemoteCompanyConnectionStateUnauthorized();
         }
     }
     @Override
@@ -97,7 +102,8 @@ public class ProjectInputServiceImpl implements ProjectInputService {
             ProjectFieldsEmptyException,
             RemoteEmployeeApiUnavailableException,
             RemoteCompanyApiUnavailableException,
-            RemoteEmployeeStateNotAcceptableException{
+            RemoteEmployeeStateNotAcceptableException,
+            RemoteCompanyConnectionStateUnauthorized {
 
         ProjectValidation.projectFormatter(projectDto);
         innerUtilityCheckProject(projectDto);

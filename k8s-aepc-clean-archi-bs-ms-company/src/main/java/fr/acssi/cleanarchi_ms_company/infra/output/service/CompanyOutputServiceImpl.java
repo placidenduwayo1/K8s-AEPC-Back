@@ -52,10 +52,11 @@ public class CompanyOutputServiceImpl implements CompanyOutputService {
     @Override
     public List<Company> getCompanyByInfos(CompanyDto companyDto) {
         List<CompanyModel> companyModels = companyRepository
-                .findByCompanyNameAndAgencyAndCompanyType(
+                .findByCompanyNameAndAgencyAndCompanyTypeAndCompanyConnectState(
                 companyDto.getCompanyName(),
                         companyDto.getAgency(),
-                        companyDto.getCompanyType());
+                        companyDto.getCompanyType(),
+                        companyDto.getCompanyConnectState());
 
         return innerUtilityMethod(companyModels);
     }
