@@ -36,10 +36,10 @@
 
 # containers orchestration in K8s cluster
 - all docker containers of microservices of the application are deployed and orchestrated into k8s cluster.
-	- to get start with containers orchestration with k8s: [doc](https://kubernetes.io/fr/docs/home/).
+	- to get start with containers orchestration with k8s, refer to doc [here](https://kubernetes.io/fr/docs/home/).
 
-- each microservice container is deployed into **3 replica of k8s pods**.
-- a ***k8s service*** is created to expose to outside and load balance the pods in deployment.
+- each microservice container is deployed into **2 replica of k8s pods**.
+- a ***k8s service*** is created for each deployment to expose to outside and load balance the pods in deployment.
 
 here is the git of deploying all microservices container into kubernetes cluster: [git](https://github.com/placidenduwayo1/K8s-AEPC-Containers-Deploy.git).
 
