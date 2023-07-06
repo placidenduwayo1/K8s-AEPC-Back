@@ -24,15 +24,15 @@
 	- a spring cloud configuration server: ***k8s-aepc-ms-config-service***.
 	- the config server pulls the needed configurations from a git center of all configuration files [git](https://github.com/placidenduwayo1/config-files-center.git).
 	
-- microservices communicate each other using **(1)**; alternative scenarios and resilience are manager using **(2)** and services are discovered, loadbalanced and configured using **(3)**:
-	- (1) **spring cloud openfeign** 
+- microservices communicate each other using **(1)**; alternative scenarios and resilience are manager using **(2)** and microservices are discovered each other, loadbalanced and configured using **(3)**:
+	- (1) **spring cloud openfeign**.
 	- (2) spring cloud circuit breaker: **Resilience4J**.
-	- (3) **spring cloud kubernetes** dependecy to permit microservices to be discovered each other, load balanced and configured.
+	- (3) **spring cloud kubernetes**.
 
 # microservices containerization
 
 - each microservice is containerized using **Docker Engine**.
-- all microservices are deployed using a template file: **docker compose**: [git](https://github.com/placidenduwayo1/K8s-AEPC-Docker-Deploy.git).
+- all microservices are deployed using a **docker compose** template: [git](https://github.com/placidenduwayo1/K8s-AEPC-Docker-Deploy.git).
 
 # containers orchestration in K8s cluster
 - all docker containers of microservices of the application are deployed and orchestrated into k8s cluster.
