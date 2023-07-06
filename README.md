@@ -56,4 +56,4 @@ here is the git of deploying all microservices container into kubernetes cluster
 here is the documentations about those two tools: [Minikube-doc](https://kubernetes.io/fr/docs/setup/learning-environment/minikube/) and [Kubectl-doc](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/).
 
 # architecture
-the gloabal and detailed architecture of project can be viewed: [link](https://drive.google.com/file/d/1bedn0GuPzPgybFJBWTytlyV3dxl4WJiL/view?usp=drive_link)
+the gloabal and detailed architecture of project can be viewed: [link](https://drive.google.com/file/d/1aL_aBqA1KojRptwvY08eTbn-JgiebuND/view?usp=drive_link)
