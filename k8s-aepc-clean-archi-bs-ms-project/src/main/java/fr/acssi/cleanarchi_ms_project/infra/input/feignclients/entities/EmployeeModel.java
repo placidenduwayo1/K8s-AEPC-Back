@@ -69,7 +69,7 @@ public class EmployeeModel {
 
     @Override
     public String toString() {
-        return "Remote-API:[" +
+        return "Employee:[" +
                 "ID='" + employeeID + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +

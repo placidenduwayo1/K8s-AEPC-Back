@@ -19,57 +19,69 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AddressOutputServiceImpl implements AddressOutputService {
     private final AddressRepository addressRepository;
-    private final   EmployeeServiceProxy employeeServiceProxy;
-    @Override
-    public List<Address> getAllAddresses() {
-        List<AddressModel> addressModels = addressRepository.findByOrderByAddressIDAsc();
+    private final EmployeeServiceProxy employeeServiceProxy;
 
+    private List<Address> innerUtilityMethod(List<AddressModel> addressModels) {
         return addressModels.stream()
                 .map(AddressMapper::mapModelToClass)
                 .toList();
     }
 
     @Override
-    public Address createAddress(Address address) {
+    public List<Address> getAllAddresses() {
+        List<AddressModel> addressModels = addressRepository
+                .findByOrderByAddressIDAsc();
+        return innerUtilityMethod(addressModels);
+    }
 
+    @Override
+    public Address createAddress(Address address) {
         AddressModel addressModel = AddressMapper.mapClassToModel(address);
-        AddressModel savedAddress = addressRepository.save(addressModel);
+        AddressModel savedAddress = addressRepository
+                .save(addressModel);
 
         return AddressMapper.mapModelToClass(savedAddress);
     }
 
     @Override
     public List<Address> getAddressByInfo(AddressDto addressDto) {
-        List<AddressModel> addressModels = addressRepository.findByNumAndStreetAndPbAndCityAndCountry(
-                addressDto.getNum(), addressDto.getStreet(), addressDto.getPb(), addressDto.getCity(), addressDto.getCountry());
-        return addressModels.stream()
-                .map(AddressMapper::mapModelToClass)
-                .toList();
+        List<AddressModel> addressModels = addressRepository
+                .findByNumAndStreetAndPbAndCityAndCountry(
+                        addressDto.getNum(),
+                        addressDto.getStreet(),
+                        addressDto.getPb(),
+                        addressDto.getCity(),
+                        addressDto.getCountry()
+                );
+        return innerUtilityMethod(addressModels);
     }
 
     @Override
     public void deleteAddress(String addressID) {
-        addressRepository.deleteById(addressID);
+        addressRepository
+                .deleteById(addressID);
     }
 
     @Override
-    public Optional <Address> getAddressByID(String addressID) throws AddressNotFoundException {
-       AddressModel addressModel = addressRepository.findById(addressID).orElseThrow(
-               AddressNotFoundException::new
-       );
-
-       return Optional.of(AddressMapper.mapModelToClass(addressModel));
+    public Optional<Address> getAddressByID(String addressID) throws
+            AddressNotFoundException {
+        AddressModel addressModel = addressRepository
+                .findById(addressID)
+                .orElseThrow(AddressNotFoundException::new);
+        return Optional.of(AddressMapper.mapModelToClass(addressModel));
     }
 
     @Override
     public void updateAddress(Address address) {
         AddressModel addressModel = AddressMapper.mapClassToModel(address);
-        AddressModel savedAddress = addressRepository.save(addressModel);
+        AddressModel savedAddress = addressRepository
+                .save(addressModel);
         AddressMapper.mapModelToClass(savedAddress);
     }
 
     @Override
     public List<EmployeeModel> getEmployeesLivingAtAddress(String addressID) {
-        return employeeServiceProxy.getEmployeesLivingAtGivenAddress(addressID);
+        return employeeServiceProxy
+                .getEmployeesLivingAtGivenAddress(addressID);
     }
 }

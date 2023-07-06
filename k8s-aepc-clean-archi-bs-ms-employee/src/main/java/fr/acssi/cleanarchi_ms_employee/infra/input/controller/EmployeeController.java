@@ -1,6 +1,6 @@
 package fr.acssi.cleanarchi_ms_employee.infra.input.controller;
 
-import fr.acssi.cleanarchi_ms_employee.domain.exception_metrier.*;
+import fr.acssi.cleanarchi_ms_employee.domain.exceptions.*;
 import fr.acssi.cleanarchi_ms_employee.domain.ports.input.EmployeeInputService;
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.AddressModel;
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.ProjectModel;
@@ -18,73 +18,105 @@ import java.util.Optional;
 public class EmployeeController {
     @Value("${spring.message}")
     private String welcome;
+
     @GetMapping(value = "/")
-    public String getWelcome(){
+    public String getWelcome() {
         return welcome;
     }
-    public final EmployeeInputService employeeInputService;
-    private final AddressServiceProxy addressServiceProxy;
 
-    public EmployeeController(EmployeeInputService employeeInputService, @Qualifier("address-service-proxy") AddressServiceProxy addressServiceProxy) {
+    public final EmployeeInputService employeeInputService;
+    private final  AddressServiceProxy addressServiceProxy;
+
+    public EmployeeController(
+            EmployeeInputService employeeInputService,
+            @Qualifier("address-service-proxy") AddressServiceProxy addressServiceProxy) {
         this.employeeInputService = employeeInputService;
         this.addressServiceProxy = addressServiceProxy;
     }
 
+    private void innerUtilityMethod(Employee employee) {
+        employee.setAddress(addressServiceProxy
+                .getAddressById(employee.getAddressID()));
+    }
 
     @GetMapping(value = "/employees", produces = "application/json")
-    public List<Employee> getEmployees(){
-        List<Employee> employees = employeeInputService.getAllEmployees();
-        employees.forEach(employee -> employee.setAddress(addressServiceProxy.getAddressById(employee.getAddressID())));
-
+    public List<Employee> getEmployees() {
+        List<Employee> employees = employeeInputService
+                .getAllEmployees();
+        employees.forEach(this::innerUtilityMethod);
         return employees;
     }
 
     @PostMapping(value = "/employees")
-    public Employee createEmployee(@RequestBody EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException, EmployeeStateUnrecognizedException,
-            EmployeeTypeUnrecognizedException{
-        Employee createdEmployee = employeeInputService.createEmployee(employeeDto);
-        createdEmployee.setAddress(addressServiceProxy.getAddressById(createdEmployee.getAddressID()));
+    public Employee createEmployee(@RequestBody EmployeeDto employeeDto) throws
+            EmployeeFieldsInvalidException,
+            EmployeeAlreadyExistsException,
+            RemoteAddressApiUnavailableException,
+            EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException {
+        Employee createdEmployee = employeeInputService
+                .createEmployee(employeeDto);
+        innerUtilityMethod(createdEmployee);
 
         return createdEmployee;
     }
 
     @PutMapping(value = "/employees/{employeeID}")
-    public Employee updateEmployee(@PathVariable(name = "employeeID") String employeeID, @RequestBody EmployeeDto employeeDto)
-            throws EmployeeNotFoundException, EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException,
-            EmployeeAlreadyExistsException, EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException {
-        Employee employee = employeeInputService.updateEmployee(employeeID, employeeDto);
-        employee.setAddress(addressServiceProxy.getAddressById(employee.getAddressID()));
+    public Employee updateEmployee(
+            @PathVariable(name = "employeeID") String employeeID,
+            @RequestBody EmployeeDto employeeDto) throws
+            EmployeeNotFoundException,
+            EmployeeFieldsInvalidException,
+            RemoteAddressApiUnavailableException,
+            EmployeeAlreadyExistsException,
+            EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException {
+        Employee employee = employeeInputService
+                .updateEmployee(employeeID, employeeDto);
+        innerUtilityMethod(employee);
         return employee;
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @GetMapping(value = "/employees/{employeeID}", produces = "application/json")
-    public Optional<Employee> getEmployeeByID(@PathVariable(name = "employeeID") String employeeID) throws EmployeeNotFoundException {
-        Optional<Employee> employee = employeeInputService.getEmployeeByID(employeeID);
-        employee.get().setAddress(addressServiceProxy.getAddressById(employee.get().getAddressID()));
+    public Optional<Employee> getEmployeeByID(
+            @PathVariable(name = "employeeID") String employeeID) throws
+            EmployeeNotFoundException {
+        Optional<Employee> employee = employeeInputService
+                .getEmployeeByID(employeeID);
+        innerUtilityMethod(employee.get());
         return employee;
     }
 
     @DeleteMapping(value = "/employees/{employeeID}")
-    public void deleteEmployee(@PathVariable(name = "employeeID") String employeeID) throws EmployeeNotFoundException,
+    public void deleteEmployee(
+            @PathVariable(name = "employeeID") String employeeID) throws
+            EmployeeNotFoundException,
             EmployeeAssociatedProjectsException {
-        employeeInputService.deleteEmployee(employeeID);
+        employeeInputService
+                .deleteEmployee(employeeID);
     }
 
     @GetMapping(value = "/employees/addresses/{addressID}", produces = "application/json")
-    public List<Employee> getEmployeesLivingGivenAddress(@PathVariable(name = "addressID") String addressID){
-        List<Employee> employees = employeeInputService.getEmployeesLivingAtGivenAddress(addressID);
-        employees.forEach(employee ->
-            employee.setAddress(addressServiceProxy.getAddressById(employee.getAddressID())));
-
+    public List<Employee> getEmployeesLivingGivenAddress(
+            @PathVariable(name = "addressID") String addressID) {
+        List<Employee> employees = employeeInputService
+                .getEmployeesLivingAtGivenAddress(addressID);
+        employees.forEach(this::innerUtilityMethod);
         return employees;
     }
+
     @GetMapping(value = "/projects/employees/{employeeID}", produces = "application/json")
-    public List<ProjectModel> getProjectsAssignedToEmployee(@PathVariable(name = "employeeID") String employeeID) throws EmployeeNotFoundException {
-        return employeeInputService.getProjectsAssignedToEmployee(employeeID);
+    public List<ProjectModel> getProjectsAssignedToEmployee(
+            @PathVariable(name = "employeeID") String employeeID) throws
+            EmployeeNotFoundException {
+        return employeeInputService
+                .getProjectsAssignedToEmployee(employeeID);
     }
+
     @GetMapping(value = "/employees/addresses", produces = "application/json")
-    public List<AddressModel> getAllAddresses(){
-        return addressServiceProxy.getAllAddresses();
+    public List<AddressModel> getAllAddresses() {
+        return addressServiceProxy
+                .getAllAddresses();
     }
 }

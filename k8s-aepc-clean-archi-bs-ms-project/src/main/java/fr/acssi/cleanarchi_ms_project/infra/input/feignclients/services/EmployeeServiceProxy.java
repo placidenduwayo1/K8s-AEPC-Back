@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Qualifier("employee-service-proxy")
 public interface EmployeeServiceProxy {
     @GetMapping(value = "/employees/{employeeID}", produces = "application/json")
-    EmployeeModel getEmployeeByIdError(@PathVariable(name = "employeeID") String employeeID);
+    EmployeeModel getEmployeeById(@PathVariable(name = "employeeID") String employeeID);
 }

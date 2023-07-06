@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static fr.acssi.cleanarchi_ms_employee.domain.exception_metrier.ExceptionWarnMsg.REMOTE_ADDRESS_API_UNAVAILABLE_EXCEPTION;
+import static fr.acssi.cleanarchi_ms_employee.domain.exceptions.ExceptionWarnMsg.REMOTE_ADDRESS_API_UNAVAILABLE_EXCEPTION;
 
 @Component
 public class AddressServiceProxyFallback implements AddressServiceProxy {

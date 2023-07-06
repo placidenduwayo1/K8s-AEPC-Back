@@ -5,13 +5,13 @@ public enum ProjectState {
     ONGOING("ongoing"),
     ARCHIVE("archived"),
     OUTDATED("outdated");
-    private String projectState;
+    private String state;
 
-    ProjectState(String projectState) {
-        this.projectState = projectState;
+    ProjectState(String state) {
+        this.state = state;
     }
 
-    public String getProjectState() {
-        return projectState;
+    public String getState() {
+        return state;
     }
 }

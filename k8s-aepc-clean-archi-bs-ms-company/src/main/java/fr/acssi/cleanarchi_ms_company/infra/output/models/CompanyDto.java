@@ -4,14 +4,19 @@ public class CompanyDto {
     private String companyName;
     private String agency;
     private String companyType;
+    private String companyConnectState;
 
     public CompanyDto() {
     }
 
-    public CompanyDto(String companyName, String companyType, String agency) {
+    public CompanyDto(String companyName,
+                      String agency,
+                      String companyType,
+                      String companyConnectState) {
         this.companyName = companyName;
-        this.companyType = companyType;
         this.agency = agency;
+        this.companyType = companyType;
+        this.companyConnectState = companyConnectState;
     }
 
     public String getCompanyName() {
@@ -36,5 +41,13 @@ public class CompanyDto {
 
     public void setAgency(String agency) {
         this.agency = agency;
+    }
+
+    public String getCompanyConnectState() {
+        return companyConnectState;
+    }
+
+    public void setCompanyConnectState(String companyConnectState) {
+        this.companyConnectState = companyConnectState;
     }
 }

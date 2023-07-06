@@ -1,7 +1,6 @@
 package fr.acssi.cleanarchi_ms_project.infra.output.repository;
 
 import fr.acssi.cleanarchi_ms_project.infra.output.models.ProjectModel;
-import fr.acssi.cleanarchi_ms_project.domain.entity.ProjectState;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,8 +1,5 @@
 package fr.acssi.cleanarchi_ms_project.infra.output.models;
 
-import fr.acssi.cleanarchi_ms_project.domain.entity.Priority;
-import fr.acssi.cleanarchi_ms_project.domain.entity.ProjectState;
-
 public class ProjectDto {
     private String projectName;
     private String description;

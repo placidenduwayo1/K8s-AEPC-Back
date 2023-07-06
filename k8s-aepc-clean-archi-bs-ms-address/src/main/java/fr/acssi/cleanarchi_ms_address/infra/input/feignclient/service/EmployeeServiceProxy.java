@@ -10,5 +10,6 @@ import java.util.List;
 @FeignClient(name = "k8s-aepc-bs-ms-employee")//the service DNS
 public interface EmployeeServiceProxy {
     @GetMapping(value = "/employees/addresses/{addressID}", produces = "application/json")
-    List<EmployeeModel> getEmployeesLivingAtGivenAddress(@PathVariable(name = "addressID") String addressID);
+    List<EmployeeModel> getEmployeesLivingAtGivenAddress(
+            @PathVariable(name = "addressID") String addressID);
 }

@@ -18,15 +18,22 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String employeeID, String firstname, String lastname, String email,
-                    LocalDateTime hireDate, String state, String employeeType,
-                    String addressID, AddressModel address) {
+    public Employee(
+            String employeeID,
+            String firstname,
+            String lastname,
+            String email,
+            LocalDateTime hireDate,
+            String employeeState,
+            String employeeType,
+            String addressID,
+            AddressModel address) {
         this.employeeID = employeeID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.hireDate = hireDate;
-        this.employeeState = state;
+        this.employeeState = employeeState;
         this.employeeType = employeeType;
         this.addressID = addressID;
         this.address = address;

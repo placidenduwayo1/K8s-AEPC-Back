@@ -10,12 +10,22 @@ import java.util.Optional;
 
 public interface CompanyInputService {
     List<Company> getAllCompanies();
-    Optional<Company> getCompanyByID(String companyID) throws CompanyNotFoundException;
+    Optional<Company> getCompanyByID(String companyID) throws
+            CompanyNotFoundException;
     List<Company> getCompanyByInfos(CompanyDto companyDto);
-    Company createCompany(CompanyDto companyDto) throws CompanyAlreadyExistsException,
-            CompanyFieldsEmptyException, CompanyTypeUnrecognizedException;
-    Company updateCompany(String companyID, CompanyDto companyDto) throws CompanyNotFoundException,
-            CompanyFieldsEmptyException, CompanyAlreadyExistsException, CompanyTypeUnrecognizedException;
-    void deleteCompany(String companyID) throws CompanyNotFoundException, CompanyAssociedProjectsException;
-    List<ProjectModel> getProjectsAssignedToCompany(String companyID) throws CompanyNotFoundException;
+    Company createCompany(CompanyDto companyDto) throws
+            CompanyAlreadyExistsException,
+            CompanyFieldsEmptyException,
+            CompanyTypeUnrecognizedException,
+            CompanyConnectStateUnrecognizedException;
+    Company updateCompany(String companyID, CompanyDto companyDto) throws
+            CompanyNotFoundException,
+            CompanyFieldsEmptyException,
+            CompanyAlreadyExistsException,
+            CompanyTypeUnrecognizedException;
+    void deleteCompany(String companyID) throws
+            CompanyNotFoundException,
+            CompanyAssociedProjectsException;
+    List<ProjectModel> getProjectsAssignedToCompany(String companyID) throws
+            CompanyNotFoundException;
 }

@@ -4,11 +4,11 @@ public enum CompanyType {
     CLIENT("client"),
     PROSPECT("prospect"),
     ESN("esn");
-    private final String companyType;
-    CompanyType(String companyType) {
-        this.companyType = companyType;
+    private final String type;
+    CompanyType(String type) {
+        this.type = type;
     }
-    public String getCompanyType() {
-        return companyType;
+    public String getType() {
+        return type;
     }
 }

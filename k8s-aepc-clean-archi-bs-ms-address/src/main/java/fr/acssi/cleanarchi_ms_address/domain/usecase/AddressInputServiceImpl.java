@@ -20,28 +20,27 @@ public class AddressInputServiceImpl implements AddressInputService {
         this.addressOutputService = addressOutputService;
     }
 
+    private void innerUtilityAddressCheck(AddressDto addressDto) throws
+            AddressFieldsEmptyException, AddressAlreadyExistsException{
+        if (!AddressValidation.areValidAddressFields(addressDto)) {
+            throw new AddressFieldsEmptyException();
+        } else if (!getAddressByInfo(addressDto).isEmpty()) {
+            throw new AddressAlreadyExistsException();
+        }
+    }
+
     @Override
     public List<Address> getAllAddresses() {
         return addressOutputService.getAllAddresses();
     }
 
     @Override
-    public Address createAddress(AddressDto addressDto) throws AddressFieldsEmptyException, AddressAlreadyExistsException,
-            AddressNumInvalidException, AddressPBInvalidException {
+    public Address createAddress(AddressDto addressDto) throws
+            AddressFieldsEmptyException,
+            AddressAlreadyExistsException{
 
         AddressValidation.addressFormatter(addressDto);
-
-        if (!AddressValidation.areValidAddressTextFields(addressDto)) {
-            throw new AddressFieldsEmptyException();
-        } else if (!AddressValidation.isValidNum(addressDto.getNum())) {
-            throw new AddressNumInvalidException();
-        } else if (!AddressValidation.isValidPb(addressDto.getPb())) {
-            throw new AddressPBInvalidException();
-        }
-        if (!getAddressByInfo(addressDto).isEmpty()) {
-            throw new AddressAlreadyExistsException();
-        }
-
+        innerUtilityAddressCheck(addressDto);
         Address address = AddressMapper.mapDtoToClass(addressDto);
         address.setAddressID(UUID.randomUUID().toString());
 
@@ -54,9 +53,12 @@ public class AddressInputServiceImpl implements AddressInputService {
     }
 
     @Override
-    public void deleteAddress(String addressID) throws AddressNotFoundException, AddressAssignedEmployeesException {
+    public void deleteAddress(String addressID) throws
+            AddressNotFoundException,
+            AddressAssignedEmployeesException {
         Optional<Address> address = getAddressByID(addressID);
-        List<EmployeeModel> employees = getEmployeesLivingAtAddressThis(address.get().getAddressID());
+        List<EmployeeModel> employees = getEmployeesLivingAtAddressThis(
+                address.get().getAddressID());
         if(!employees.isEmpty()){
             throw new AddressAssignedEmployeesException();
         }
@@ -64,7 +66,8 @@ public class AddressInputServiceImpl implements AddressInputService {
     }
 
     @Override
-    public Optional<Address> getAddressByID(String addressID) throws AddressNotFoundException {
+    public Optional<Address> getAddressByID(String addressID) throws
+            AddressNotFoundException {
         return Optional.of(addressOutputService.getAddressByID(addressID).orElseThrow(
                 AddressNotFoundException::new
         ));
@@ -72,20 +75,12 @@ public class AddressInputServiceImpl implements AddressInputService {
 
 
     @Override
-    public Address updateAddress(String addressID, AddressDto addressDto) throws AddressNotFoundException,
-            AddressFieldsEmptyException, AddressPBInvalidException, AddressNumInvalidException, AddressAlreadyExistsException {
+    public Address updateAddress(String addressID, AddressDto addressDto) throws
+            AddressNotFoundException, AddressFieldsEmptyException,
+            AddressAlreadyExistsException {
+
         AddressValidation.addressFormatter(addressDto);
-        if(!AddressValidation.isValidPb(addressDto.getPb())){
-            throw new AddressPBInvalidException();
-        }
-        else if(!AddressValidation.isValidNum(addressDto.getNum())){
-            throw new AddressNumInvalidException();
-        } else if (!AddressValidation.areValidAddressTextFields(addressDto)) {
-            throw new AddressFieldsEmptyException();
-        }
-        if(!getAddressByInfo(addressDto).isEmpty()){
-            throw new AddressAlreadyExistsException();
-        }
+        innerUtilityAddressCheck(addressDto);
         Address address = AddressMapper.mapDtoToClass(addressDto);
         Optional<Address> createdAddress = getAddressByID(addressID);
         createdAddress.ifPresentOrElse(value -> {
@@ -98,8 +93,11 @@ public class AddressInputServiceImpl implements AddressInputService {
     }
 
     @Override
-    public List<EmployeeModel> getEmployeesLivingAtAddressThis(String addressID) throws AddressNotFoundException {
+    public List<EmployeeModel> getEmployeesLivingAtAddressThis(String addressID) throws
+            AddressNotFoundException {
         Optional<Address> address = getAddressByID(addressID);
-        return addressOutputService.getEmployeesLivingAtAddress(address.get().getAddressID());
+        return addressOutputService.getEmployeesLivingAtAddress(
+                address.get().getAddressID()
+        );
     }
 }

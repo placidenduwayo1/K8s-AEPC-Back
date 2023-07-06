@@ -10,12 +10,18 @@ import java.util.Optional;
 
 public interface AddressInputService {
     List<Address> getAllAddresses();
-    Address createAddress(AddressDto addressDto) throws AddressFieldsEmptyException, AddressAlreadyExistsException,
-            AddressNumInvalidException, AddressPBInvalidException;
+    Address createAddress(AddressDto addressDto) throws
+            AddressFieldsEmptyException,
+            AddressAlreadyExistsException;
     List<Address> getAddressByInfo(AddressDto addressDto);
-    void deleteAddress (String addressID) throws AddressNotFoundException, AddressAssignedEmployeesException;
-    Optional<Address> getAddressByID(String addressID) throws  AddressNotFoundException;
-    Address updateAddress(String addressID, AddressDto addressDto) throws AddressNotFoundException, AddressFieldsEmptyException,
-            AddressPBInvalidException, AddressNumInvalidException, AddressAlreadyExistsException;
-    List<EmployeeModel> getEmployeesLivingAtAddressThis(String addressID) throws AddressNotFoundException;
+    void deleteAddress (String addressID) throws
+            AddressNotFoundException,
+            AddressAssignedEmployeesException;
+    Optional<Address> getAddressByID(String addressID) throws
+            AddressNotFoundException;
+    Address updateAddress(String addressID, AddressDto addressDto) throws
+            AddressNotFoundException, AddressFieldsEmptyException,
+            AddressAlreadyExistsException;
+    List<EmployeeModel> getEmployeesLivingAtAddressThis(String addressID) throws
+            AddressNotFoundException;
 }

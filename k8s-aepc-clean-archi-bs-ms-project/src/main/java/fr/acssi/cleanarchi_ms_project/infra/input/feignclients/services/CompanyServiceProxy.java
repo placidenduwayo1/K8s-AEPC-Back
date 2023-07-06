@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Qualifier("company-service-proxy")
 public interface CompanyServiceProxy {
     @GetMapping(value = "/companies/{companyID}", produces = "application/json")
-    CompanyModel getCompanyByIdError(@PathVariable(name = "companyID") String companyID);
+    CompanyModel getCompanyById(@PathVariable(name = "companyID") String companyID);
 }
 

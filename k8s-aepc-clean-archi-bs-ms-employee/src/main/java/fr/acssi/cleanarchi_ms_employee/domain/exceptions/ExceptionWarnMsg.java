@@ -1,4 +1,4 @@
-package fr.acssi.cleanarchi_ms_employee.domain.exception_metrier;
+package fr.acssi.cleanarchi_ms_employee.domain.exceptions;
 
 public enum ExceptionWarnMsg {
     EMPLOYEE_ALREADY_EXISTS_EXCEPTION ("Employee already exists exception"),

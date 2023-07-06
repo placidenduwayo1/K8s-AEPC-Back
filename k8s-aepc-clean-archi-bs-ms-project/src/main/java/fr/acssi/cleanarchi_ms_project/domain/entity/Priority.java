@@ -7,13 +7,13 @@ public enum Priority {
     P4((byte)4),
     P5((byte)5);
 
-    private byte priority;
+    private byte projectPriority;
 
-    Priority(byte priority) {
-        this.priority = priority;
+    Priority(byte projectPriority) {
+        this.projectPriority = projectPriority;
     }
 
-    public byte getPriority() {
-        return priority;
+    public byte getProjectPriority() {
+        return projectPriority;
     }
 }

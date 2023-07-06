@@ -10,7 +10,8 @@ import java.util.Optional;
 
 public interface CompanyOutputService {
     List<Company> getAllCompanies();
-    Optional<Company> getCompanyByID(String companyID) throws CompanyNotFoundException;
+    Optional<Company> getCompanyByID(String companyID) throws
+            CompanyNotFoundException;
     List<Company> getCompanyByInfos(CompanyDto companyDto);
     Company createCompany(Company company);
     Company updateCompany(Company company);

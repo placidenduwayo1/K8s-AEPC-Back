@@ -5,7 +5,8 @@ public enum ExceptionsWarnMsg {
     COMPANY_NOT_FOUND_EXCEPTION("Company not found exception"),
     COMPANY_ASSOCIATED_PROJECT_EXCEPTION ("Company project associated exception"),
     COMPANY_FIELDS_EMPTY_EXCEPTION ("Company one or more fields invalid exception"),
-    COMPANY_TYPE_INVALID_EXCEPTION("Company type invalid exception");
+    COMPANY_TYPE_UNRECOGNIZED_EXCEPTION("Company type unrecognized exception"),
+    COMPANY_CONNECT_STATE_UNRECOGNIZED_EXCEPTION("Company connection state unrecognized exception");
 
     private final String exception;
 

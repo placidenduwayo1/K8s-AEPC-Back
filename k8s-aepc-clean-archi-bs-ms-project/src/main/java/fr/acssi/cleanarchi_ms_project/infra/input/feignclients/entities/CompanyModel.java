@@ -8,6 +8,7 @@ public class CompanyModel {
     private String agency;
     private String companyType;
     private LocalDateTime connectedDate;
+    private String companyConnectState;
 
     public String getCompanyID() {
         return companyID;
@@ -49,6 +50,13 @@ public class CompanyModel {
         this.agency = agency;
     }
 
+    public String getCompanyConnectState() {
+        return companyConnectState;
+    }
+    public void setCompanyConnectState(String companyConnectState) {
+        this.companyConnectState = companyConnectState;
+    }
+
     @Override
     public String toString() {
         return "Company:[" +
@@ -57,6 +65,7 @@ public class CompanyModel {
                 ", company type=" + companyType +
                 ", connected date=" + connectedDate +
                 ", agency='" + agency + '\'' +
+                ", connection state= "+companyConnectState+ '\'' +
                 ']';
     }
 }

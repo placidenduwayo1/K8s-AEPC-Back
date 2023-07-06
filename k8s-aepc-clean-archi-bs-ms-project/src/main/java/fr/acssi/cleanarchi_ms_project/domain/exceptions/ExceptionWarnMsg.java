@@ -1,4 +1,4 @@
-package fr.acssi.cleanarchi_ms_project.domain.exceptions_metiers;
+package fr.acssi.cleanarchi_ms_project.domain.exceptions;
 
 public enum ExceptionWarnMsg {
     PROJECT_NOT_FOUND_EXCEPTION("project not found exception"),
@@ -8,9 +8,10 @@ public enum ExceptionWarnMsg {
     REMOTE_EMPLOYEE_STATE_NOT_ACCEPTABLE_EXCEPTION("remote employee state invalid exception "),
     PROJECT_ALREADY_ASSIGNED_EMPLOYEE_EXCEPTION("Project, employee already associated project exception"),
     PROJECT_ALREADY_ASSIGNED_COMPANY_EXCEPTION("Project, company already associated exception"),
-    REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION("Remote company not available"),
+    REMOTE_COMPANY_API_UNAVAILABLE_EXCEPTION("Remote company not available exception"),
     PROJECT_PRIORITY_UNRECOGNIZED_EXCEPTION("Project priority unrecognized exception"),
-    PROJECT_STATE_UNRECOGNIZED_EXCEPTION("Project state unrecognized exception");
+    PROJECT_STATE_UNRECOGNIZED_EXCEPTION("Project state unrecognized exception"),
+    REMOTE_COMPANY_CONNECT_STATE_UNAUTHORIZED_EXCEPTION("Remote company connect state unauthorized exception");
 
     private final String exception;
 

@@ -10,5 +10,6 @@ import java.util.List;
 @FeignClient(name = "k8s-aepc-bs-ms-project")
 public interface ProjectServiceProxy {
     @GetMapping(value = "/projects/companies/{companyID}", produces = "application/json")
-    List<ProjectModel> getProjectsAssignedCompany(@PathVariable(name = "companyID") String companyID);
+    List<ProjectModel> getProjectsAssignedCompany(
+            @PathVariable(name = "companyID") String companyID);
 }

@@ -13,7 +13,8 @@ public interface AddressOutputService {
     Address createAddress(Address address);
     List<Address> getAddressByInfo(AddressDto addressDto);
     void deleteAddress (String addressID);
-    Optional<Address> getAddressByID(String addressID) throws AddressNotFoundException;
+    Optional<Address> getAddressByID(String addressID) throws
+            AddressNotFoundException;
     void updateAddress(Address address);
     List<EmployeeModel> getEmployeesLivingAtAddress(String addressID);
 }

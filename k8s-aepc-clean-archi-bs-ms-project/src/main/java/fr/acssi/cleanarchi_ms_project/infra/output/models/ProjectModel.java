@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity @Table(name = "projects")
 public class ProjectModel {
     @Id
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GenericGenerator(name = "uuid")
     private String projectID;
     private String projectName;
     private String description;

@@ -8,17 +8,23 @@ public class Company {
     private String agency;
     private String companyType;
     private LocalDateTime connectedDate;
+    private String companyConnectState;
 
     public Company() {
     }
 
-    public Company(String companyID, String companyName,
-                   String companyType, LocalDateTime connectedDate, String agency) {
+    public Company(String companyID,
+                   String companyName,
+                   String companyType,
+                   LocalDateTime connectedDate,
+                   String agency,
+                   String companyConnectState) {
         this.companyID = companyID;
         this.companyName = companyName;
         this.companyType = companyType;
         this.connectedDate = connectedDate;
         this.agency = agency;
+        this.companyConnectState = companyConnectState;
     }
 
     public String getCompanyID() {
@@ -59,5 +65,13 @@ public class Company {
 
     public void setAgency(String agency) {
         this.agency = agency;
+    }
+
+    public String getCompanyConnectState() {
+        return companyConnectState;
+    }
+
+    public void setCompanyConnectState(String companyConnectState) {
+        this.companyConnectState = companyConnectState;
     }
 }

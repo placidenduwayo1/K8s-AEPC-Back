@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor @NoArgsConstructor @Data
 public class CompanyModel {
     @Id
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GenericGenerator(name = "uuid")
     private String companyID;
     private String companyName;
     private String agency;
     private String companyType;
     private LocalDateTime connectedDate;
+    private String companyConnectState;
 }

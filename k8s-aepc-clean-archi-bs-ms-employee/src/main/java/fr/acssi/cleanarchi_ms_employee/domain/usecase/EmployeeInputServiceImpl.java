@@ -1,6 +1,6 @@
 package fr.acssi.cleanarchi_ms_employee.domain.usecase;
 
-import fr.acssi.cleanarchi_ms_employee.domain.exception_metrier.*;
+import fr.acssi.cleanarchi_ms_employee.domain.exceptions.*;
 import fr.acssi.cleanarchi_ms_employee.domain.ports.input.EmployeeInputService;
 import fr.acssi.cleanarchi_ms_employee.domain.ports.output.EmployeeOutputService;
 import fr.acssi.cleanarchi_ms_employee.infra.input.feignclient.models.AddressModel;
@@ -22,87 +22,107 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
     public EmployeeInputServiceImpl(EmployeeOutputService employeeOutputService) {
         this.employeeOutputService = employeeOutputService;
     }
-    @Override
-    public List<Employee> getAllEmployees() {
-        return employeeOutputService.getAllEmployees();
-    }
 
-    @Override
-    public Employee createEmployee(EmployeeDto employeeDto) throws EmployeeFieldsInvalidException,
-            EmployeeAlreadyExistsException, RemoteAddressApiUnavailableException,
-            EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException{
-
-        EmployeeValidation.employeeFormatter(employeeDto);
-
+    private void innerUtilityEmployeeCheck(EmployeeDto employeeDto) throws
+            EmployeeFieldsInvalidException,
+            EmployeeAlreadyExistsException,
+            EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException {
         if (EmployeeValidation.areInvalidEmployeeRequiredFields(employeeDto)) {
             throw new EmployeeFieldsInvalidException();
+        } else if (!EmployeeValidation.isValidEmployeeState(
+                employeeDto.getEmployeeState())) {
+            throw new EmployeeStateUnrecognizedException();
+        } else if (!EmployeeValidation.isValidEmployeeType(
+                employeeDto.getEmployeeType())) {
+            throw new EmployeeTypeUnrecognizedException();
         }
-
         if (!getEmployeeByInfo(employeeDto).isEmpty()) {
             throw new EmployeeAlreadyExistsException();
         }
-        if(!EmployeeValidation.isValidEmployeeState(employeeDto.getEmployeeState())){
-            throw new EmployeeStateUnrecognizedException();
+    }
+
+    private void innerUtilityCheckRemoteAddress(AddressModel address) throws
+            RemoteAddressApiUnavailableException {
+        if (EmployeeValidation.isInvalidRemoteAddressAPI(address)) {
+            throw new RemoteAddressApiUnavailableException(address.toString());
         }
-        if(!EmployeeValidation.isValidEmployeeType(employeeDto.getEmployeeType())){
-            throw new EmployeeTypeUnrecognizedException();
-        }
-        Optional<AddressModel> address = getAddressByID(employeeDto.getAddressID());
-        if(EmployeeValidation.isInvalidRemoteAddressAPI(address.get())){
-            throw new RemoteAddressApiUnavailableException(address.get().toString());
-        }
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeOutputService
+                .getAllEmployees();
+    }
+
+    @Override
+    public Employee createEmployee(EmployeeDto employeeDto) throws
+            EmployeeFieldsInvalidException,
+            EmployeeAlreadyExistsException,
+            RemoteAddressApiUnavailableException,
+            EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException {
+
+        EmployeeValidation.employeeFormatter(employeeDto);
+        innerUtilityEmployeeCheck(employeeDto);
+        Optional<AddressModel> address = getAddressByID(
+                employeeDto.getAddressID());
+        innerUtilityCheckRemoteAddress(address.get());
         Employee employee = EmployeeMapper.mapDtoToClass(employeeDto);
 
         employee.setEmployeeID(UUID.randomUUID().toString());
-        employee.setEmail(EmployeeValidation.buildEmployeeProfessionalEmail(employeeDto.getFirstname(), employeeDto.getLastname(), "acssi"));
+        employee.setEmail(
+                EmployeeValidation.buildEmployeeProfessionalEmail(
+                        employeeDto.getFirstname(),
+                        employeeDto.getLastname(),
+                        "acssi"));
         employee.setHireDate(LocalDateTime.now(ZoneId.of("Europe/Paris")));
         employee.setAddressID(address.get().getAddressID());
         employee.setAddress(address.get());
-        return employeeOutputService.createEmployee(employee);
+        return employeeOutputService
+                .createEmployee(employee);
     }
 
     @Override
     public Optional<AddressModel> getAddressByID(String addressID) {
-        AddressModel address = employeeOutputService.getAddressByID(addressID);
+        AddressModel address = employeeOutputService
+                .getAddressByID(addressID);
         return Optional.of(address);
     }
 
     @Override
     public List<AddressModel> getAllAddresses() {
-        return employeeOutputService.getAllAddresses();
+        return employeeOutputService
+                .getAllAddresses();
     }
 
     @Override
     public List<Employee> getEmployeeByInfo(EmployeeDto employeeDto) {
-        return employeeOutputService.getEmployeeByInfo(employeeDto);
+        return employeeOutputService
+                .getEmployeeByInfo(employeeDto);
     }
-    @Override
-    public Optional<Employee> getEmployeeByID(String employeeID) throws EmployeeNotFoundException {
 
-        return Optional.of(employeeOutputService.getEmployeeByID(employeeID).orElseThrow(
-                        EmployeeNotFoundException::new
-                )
-        );
-    }
     @Override
-    public Employee updateEmployee(String employeeID, EmployeeDto employeeDto) throws EmployeeNotFoundException,
-            EmployeeFieldsInvalidException, RemoteAddressApiUnavailableException, EmployeeAlreadyExistsException,
-            EmployeeStateUnrecognizedException, EmployeeTypeUnrecognizedException{
+    public Optional<Employee> getEmployeeByID(String employeeID) throws
+            EmployeeNotFoundException {
+        return Optional.of(employeeOutputService
+                .getEmployeeByID(employeeID)
+                .orElseThrow(EmployeeNotFoundException::new));
+    }
+
+    @Override
+    public Employee updateEmployee(
+            String employeeID,
+            EmployeeDto employeeDto) throws
+            EmployeeNotFoundException,
+            EmployeeFieldsInvalidException,
+            RemoteAddressApiUnavailableException,
+            EmployeeAlreadyExistsException,
+            EmployeeStateUnrecognizedException,
+            EmployeeTypeUnrecognizedException {
 
         EmployeeValidation.employeeFormatter(employeeDto);
-
-        if (EmployeeValidation.areInvalidEmployeeRequiredFields(employeeDto)) {
-            throw new EmployeeFieldsInvalidException();
-        }
-        if(!getEmployeeByInfo(employeeDto).isEmpty()){
-            throw new EmployeeAlreadyExistsException();
-        }
-        if(!EmployeeValidation.isValidEmployeeState(employeeDto.getEmployeeState())){
-            throw new EmployeeStateUnrecognizedException();
-        } else if (!EmployeeValidation.isValidEmployeeType(employeeDto.getEmployeeType())) {
-            throw new EmployeeTypeUnrecognizedException();
-        }
-
+        innerUtilityEmployeeCheck(employeeDto);
         Employee employee = EmployeeMapper.mapDtoToClass(employeeDto);
         Optional<Employee> createdEmployee = getEmployeeByID(employeeID);
         createdEmployee.ifPresentOrElse(value -> {
@@ -118,36 +138,43 @@ public class EmployeeInputServiceImpl implements EmployeeInputService {
                 EmployeeNotFoundException::new
         );
 
-        Optional<AddressModel> addressModel = getAddressByID(employeeDto.getAddressID());
-        if(!EmployeeValidation.isInvalidRemoteAddressAPI(addressModel.get())){
-            throw new RemoteAddressApiUnavailableException(addressModel.toString());
-        }
+        Optional<AddressModel> addressModel = getAddressByID(
+                employeeDto.getAddressID());
+        innerUtilityCheckRemoteAddress(addressModel.get());
         employee.setAddress(addressModel.get());
-
-        return employeeOutputService.updateEmployee(employee);
+        return employeeOutputService
+                .updateEmployee(employee);
     }
 
     @Override
-    public void deleteEmployee(String employeeID) throws EmployeeNotFoundException, EmployeeAssociatedProjectsException {
+    public void deleteEmployee(String employeeID) throws
+            EmployeeNotFoundException,
+            EmployeeAssociatedProjectsException {
+
         Optional<Employee> employee = getEmployeeByID(employeeID);
-        if(employee.isEmpty()){
+        if (employee.isEmpty()) {
             throw new EmployeeNotFoundException();
-        }
-        else if (!getProjectsAssignedToEmployee(employee.get().getEmployeeID()).isEmpty()) {
+        } else if (!getProjectsAssignedToEmployee(
+                employee.get().getEmployeeID()).isEmpty()) {
             throw new EmployeeAssociatedProjectsException();
         }
 
-        employeeOutputService.deleteEmployee(employee.get());
-    }
-    @Override
-    public List<Employee> getEmployeesLivingAtGivenAddress(String addressID) {
-        Optional<AddressModel>  address = getAddressByID(addressID);
-        return employeeOutputService.getEmployeesLivingAtGivenAddress(address.get().getAddressID());
+        employeeOutputService
+                .deleteEmployee(employee.get());
     }
 
     @Override
-    public List<ProjectModel> getProjectsAssignedToEmployee(String employeeID) throws EmployeeNotFoundException {
+    public List<Employee> getEmployeesLivingAtGivenAddress(String addressID) {
+        Optional<AddressModel> address = getAddressByID(addressID);
+        return employeeOutputService
+                .getEmployeesLivingAtGivenAddress(address.get().getAddressID());
+    }
+
+    @Override
+    public List<ProjectModel> getProjectsAssignedToEmployee(String employeeID) throws
+            EmployeeNotFoundException {
         Optional<Employee> employee = getEmployeeByID(employeeID);
-        return employeeOutputService.getProjectsAssignedToEmployee(employee.get().getEmployeeID());
+        return employeeOutputService
+                .getProjectsAssignedToEmployee(employee.get().getEmployeeID());
     }
 }
